@@ -1,68 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 웹 소켓을 이용한 채팅 어플 - 클라이언트
 
-## Available Scripts
+## 01. 프로젝트 개요
 
-In the project directory, you can run:
+### (01) 프로젝트 목적
 
-### `npm start`
+ 해당 프로젝트는 HTML5에서 지원하는 웹 소켓 모듈을 사용하며 채팅 어플을 구현하기 위한 프로젝트의 클라이언트(프론트엔드)부분 입니다. 해당 프로젝트의 목적은 리액트에 SASS를 적용해서 프로젝트를 구성하는 방법을 연습하고, 자체적인 리액트 컴포넌트를 설계해보기 위한 프로젝트입니다.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- 리액트 프로젝트를 초기에 설정하는 방법을 연습.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+- 스스로 구현하는 React Component를 설계.
 
-### `npm test`
+- story-book 환경을 이해하여 React-Component를 단위별로 설계하는 법 숙달.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ ### (02) 프로젝트 아키텍쳐
 
-### `npm run build`
+ - **Language** : JavaScript
+ - **View Framework** : React.js
+ - **State Management** : Redux.js
+ - **Component Dev Environment** : story-book
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+ ### (03) 프로젝트 리스트
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+ - [x] 프로젝트 초기 설정 및 git 설정
+ - [x] 프로젝트 개발 리스트 작성 및 README.md 프로젝트 정리
+ - [ ] 개발 환경 설정 및 기본 개념 습득
+ - [ ] storybook 환경 구현하기
+ - [ ] 채팅방 컴포넌트 구현하기
+ - [ ] 컴포넌트를 사용해 실제 채팅방 구현하기
+ - [ ] 웹 소켓 모듈(Socket.io)를 이용해 서버에서 데이터 호출하기
+ - [ ] 프로젝트 고찰 및 피드백
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+ ## 02. 프로젝트 이론
 
-### `npm run eject`
+ ## 03. 프로젝트 Directory 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+ 구분       | 설명 
+ ----      | ---------------------------------------
+ components| 프로젝트의 컴포넌트들을 보관하는 디렉토리
+ pages     | 컴포넌트를 모아 구현한 페이지를 보관하는 디렉토리
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+ ## 04. 프로젝트 고찰 
