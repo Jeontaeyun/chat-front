@@ -12,6 +12,7 @@ const BoxBorder = styled.div`
     background: ${props => props.disabled? "white" :"#FF357B"};
     border-radius: 0.3rem;
     height: 2rem;
+    cursor: ${props => !props.disabled && 'pointer'};
     ${props => props.disabled? "" :"&:hover{transition: background 0.2s ease-in-out; background: #D82D68;}"};
 `;
 

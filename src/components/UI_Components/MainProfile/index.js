@@ -2,11 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Frame = styled.div`
+    transition: background 0.1s ease-out;
     display:flex;
     flex-direction: row;
     align-items: center;
     width: 100%;
     height: 60px;
+    cursor: pointer;
+    &:hover{
+        transition: background 0.1s ease-in;
+        background: rgba(45,54,70,0.2);
+    }
+    & + & {
+        border-top: 0.1px solid rgba(45,54,70,0.7);
+    } 
 `;
 
 const RoomTitle = styled.div`

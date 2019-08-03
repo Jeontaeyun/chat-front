@@ -3,6 +3,8 @@ import io from 'socket.io-client';
 import styled from 'styled-components';
 import Title from '../Title';
 import MainProfile from '../MainProfile';
+import ChattingInput from '../ChattingInput';
+import CreateInfo from '../CreateInfo';
 
 const BoxBorder = styled.div`
     display: flex;
@@ -21,7 +23,6 @@ const FirstContianer = styled.div`
     position: relative;
     background: #2D3646;
     width: 100%;
-
 `;
 const SecondContianer = styled.div`
     flex:0.8;
@@ -30,10 +31,15 @@ const SecondContianer = styled.div`
     width: 100%;
     overflow: scroll;
 `;
-
+const ThirdContianer = styled.div`
+    flex:0.1;
+    display: block;
+    position: relative;
+    width: 100%;
+    background: rgba(45,54,70,0.8);
+`;
 
 const ChattingRoom = (props)=>{
-        const {children} = props;
         return(
             <>
                 <BoxBorder>
@@ -43,8 +49,13 @@ const ChattingRoom = (props)=>{
                     <SecondContianer>
                         {/*프로필이 들어가거나 채팅 목록이 들어갈 화면*/}
                         <MainProfile/>
+                        <MainProfile/>
+                        <MainProfile/>
+                        <MainProfile/>
                     </SecondContianer>
-                    {children}
+                    <ThirdContianer>
+                        <CreateInfo/>
+                    </ThirdContianer>
                 </BoxBorder>
             </>
         );
