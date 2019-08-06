@@ -117,6 +117,10 @@ const MainProfile = (props)=>{
     });
     const opacity = isDragging ? 0 : 1 ;
     drag(drop(ref));
+    /*
+    스스로 피드백을 고민해 본 결과 이 부분에 뷰만 구상을 하고 HOC를 통해서 드래그앤 드랍 기능을 추가할 수 있지 않았을까?
+    이렇게 뷰랑 로직을 분리해야지 스토리북을 사용하는 효과가 있다.
+    */
     return(
             <>
             <Link style= {{textDecoration: 'none', color: 'black'}} to = {link}>
