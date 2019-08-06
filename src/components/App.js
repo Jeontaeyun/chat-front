@@ -1,10 +1,12 @@
 import React from 'react';
-import ChattingRoom from './common/ChattingRoom';
+import {Main, Room} from '../pages';
+import {Route} from 'react-router-dom';
 
 const App = ()=>{
   return (
-    <div className="App">
-      <ChattingRoom/>
+    <div>
+        <Route exact path = '/' component = {Main}/> 
+        <Route path = '/room/:room_id' component = {Room}/>
     </div>
   );
 }
