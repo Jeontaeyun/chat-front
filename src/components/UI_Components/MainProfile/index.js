@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const basicProfile = '/basicProfile.jpg';
+
 const Frame = styled.div`
     transition: background 0.1s ease-out;
     display:flex;
@@ -30,7 +32,11 @@ const Profile = styled.div`
     ${props=> props.src? `
     background: white;
     ` : `
-    background: #2D3646
+    background-image: url('${basicProfile}');
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    bacground: white;
     `}
     border-radius: 100%;
 `;
