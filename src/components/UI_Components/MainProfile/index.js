@@ -4,11 +4,13 @@ import styled from 'styled-components';
 const basicProfile = '/basicProfile.jpg';
 
 const Frame = styled.div`
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
     transition: background 0.1s ease-out;
     display:flex;
     flex-direction: row;
     align-items: center;
-    width: 100%;
+
     height: 60px;
     cursor: pointer;
     &:hover{
@@ -17,7 +19,14 @@ const Frame = styled.div`
     }
     & + & {
         border-top: 0.1px solid rgba(45,54,70,0.7);
-    } 
+    }
+    &:first-of-type{
+        margin-top: 0.3rem;
+    }
+    &:last-of-type{
+        margin-bottom: 0.3rem;
+    }
+    
 `;
 
 const RoomTitle = styled.div`
@@ -37,8 +46,10 @@ const Profile = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     bacground: white;
+    background-position-y: -4px;
     `}
     border-radius: 100%;
+
 `;
 const InfoContiner = styled.div`
     margin-right:3%;
@@ -59,7 +70,7 @@ const MainProfile = (props)=>{
     const {title, varibleNumber, master} = props;
         return(
             <>
-                <Frame>
+                <Frame draggable="true">
                     <Profile {...props}></Profile>
                     <RoomTitle>{title}</RoomTitle>
                     <InfoContiner>
