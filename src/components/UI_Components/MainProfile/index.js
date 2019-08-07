@@ -1,8 +1,7 @@
 import React, {useRef} from 'react';
 import {useDrag, useDrop} from 'react-dnd';
 import styled from 'styled-components';
-import ItemTypes from './ItemTypes';
-import {Link} from 'react-router-dom';
+import ItemTypes from '../../Page_Components/DraggableProfile/ItemTypes';
 
 /*
     새삼 react-dnd를 이용하면서 코드의 재사용성이 힘들다는 것을 알았다. 완벽히 독립적으로 작용하는 컴포넌트를 구현하는 것은
@@ -35,7 +34,7 @@ const Frame = styled.div`
         background: rgba(45,54,70,0.2);
     }
     & + & {
-        border-top: 0.1px solid rgba(45,54,70,0.7);
+        border-top: 0.2px solid rgba(45,54,70, 0.5);
     }
     &:first-of-type{
         margin-top: 0.3rem;
@@ -79,52 +78,13 @@ const InfoContiner = styled.div`
 const Info = styled.div`
     text-align: right;
     flex:0.5;
-`
+`;
+
 const MainProfile = (props)=>{
-    const {title, varibleNumber, id, master, moveRoom, index, link} = props;
-    const ref = useRef(null);
-    const [, drop] = useDrop({
-    accept: ItemTypes.ROOM,
-    hover(item, monitor) {
-      if (!ref.current) {
-        return
-      }
-      const dragIndex = item.index;
-      const hoverIndex = index;
-      if (dragIndex === hoverIndex) {
-        return
-      }
-      const hoverBoundingRect = ref.current.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return
-      }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
-      }
-      console.log(hoverIndex);
-      moveRoom(dragIndex, hoverIndex)
-      item.index = hoverIndex
-    },
-    });
-    const [{ isDragging }, drag] = useDrag({
-    item: { type: ItemTypes.ROOM, id, index},
-    collect: monitor => ({
-      isDragging: monitor.isDragging(),
-    }),
-    });
-    const opacity = isDragging ? 0 : 1 ;
-    drag(drop(ref));
-    /*
-    스스로 피드백을 고민해 본 결과 이 부분에 뷰만 구상을 하고 HOC를 통해서 드래그앤 드랍 기능을 추가할 수 있지 않았을까?
-    이렇게 뷰랑 로직을 분리해야지 스토리북을 사용하는 효과가 있다.
-    */
+    const {title, varibleNumber, master} = props;
     return(
             <>
-            <Link style= {{textDecoration: 'none', color: 'black'}} to = {link}>
-                <Frame ref={ref} style={{opacity}} >
+                <Frame>
                     <Profile {...props}></Profile>
                     <RoomTitle>{title}</RoomTitle>
                     <InfoContiner>
@@ -132,7 +92,6 @@ const MainProfile = (props)=>{
                         <Info>{`${master}이 만든 방`}</Info>
                     </InfoContiner>
                 </Frame>
-            </Link>
             </>
     );
 };

@@ -1,6 +1,6 @@
 import React, {useCallback, useState} from 'react';
 import styled from 'styled-components';
-import MainProfile from '../../UI_Components/MainProfile';
+import DraggbaleProfile from '../DraggableProfile';
 import {DndProvider} from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
@@ -24,7 +24,7 @@ const DraggableMain = (props)=>{
             <styledContainer>
             <DndProvider backend = {HTML5Backend}>
                 {/*react-dnd 라이브러리를 이용할 때 반드시 map에 index를 넣어주어야 한다.*/}
-                {rooms.map((item, index)=> <MainProfile id={item} title = {item} key={item} index={index} link={`/room/${item}`} moveRoom = {moveRoom}/>)}
+                {rooms.map((item, index)=> <DraggbaleProfile id={item} title = {item} key={item} index={index} link={`/room/${item}`} moveRoom = {moveRoom}/>)}
             </DndProvider>
             </styledContainer>
     );
