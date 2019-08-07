@@ -11,8 +11,8 @@ const CreateContainer = styled.div`
 `;
 
 const InfoButton = styled(Button)`
-    margin-right: 1.5%;
-    margin-left: 1.5%;
+    margin:auto 5%;
+   
 `;
 
 const CreateInfo= (props)=>{
