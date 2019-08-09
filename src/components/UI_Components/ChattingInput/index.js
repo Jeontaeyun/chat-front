@@ -59,9 +59,12 @@ const ChattingInput = (props) => {
 	const onKeyPressText = useCallback(
 		(e) => {
 			if (e.key === 'Enter') {
-				e.preventDefault();
-				onSend(text);
-				return setText('');
+				// null값 방지해주는 조건문
+				if (text !== '') {
+					e.preventDefault();
+					onSend(text);
+					return setText('');
+				}
 			}
 		},
 		[ text ]
@@ -69,10 +72,11 @@ const ChattingInput = (props) => {
 	const handleOnClick = useCallback(
 		(e) => {
 			// 이거 무슨 설정일까?
-			e.preventDefault();
-			// 메세지 보내는 메소드 실행하는 부분
-			onSend(text);
-			return setText('');
+			if (text !== '') {
+				e.preventDefault();
+				onSend(text);
+				return setText('');
+			}
 		},
 		[ text ]
 	);
