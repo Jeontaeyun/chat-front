@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, Fragment } from 'react';
 import styled from 'styled-components';
 
-const sendIcon = './sendicon.svg';
-
 const InputContainer = styled.div`
 	position: relative;
 	top: 50%;
@@ -15,7 +13,7 @@ const InputContainer = styled.div`
 `;
 
 const TextInput = styled.input`
-	padding-right: 1rem;
+	padding-right: 2rem;
 	flex: 0.95;
 	background: white;
 	text-align: left;
@@ -25,27 +23,33 @@ const TextInput = styled.input`
 	height: 98%;
 	font-size: 0.9rem;
 	border-radius: 3rem;
+	&:focus {
+		outline: none;
+	}
 `;
 
 const SendButton = styled.div`
 	display: inline-block;
 	position: absolute;
-	z-index: 10;
 	width: 20px;
 	height: 20px;
-	background: ${(props) => props.send && `url('${sendIcon}'); background`};
+	background: url('/sendicon.svg');
 	border-radius: 100%;
 	right: 0;
 	margin-right: 3%;
-	${(props) => (props.send ? 'cursor : pointer' : null)};
+	margin-left: 3%;
+	cursor: pointer;
 `;
 
 const ChattingInput = (props) => {
+	// onSend는 text를 처리하는 로직을 넣어주는 부분이다.
+	const { onSend } = props;
 	const inputRef = useRef(null);
+	const [ text, setText ] = useState('');
+
 	useEffect(() => {
 		inputRef.current.focus();
 	}, []);
-	const [ text, setText ] = useState('');
 	const onChangeText = useCallback(
 		(e) => {
 			setText(e.target.value);
@@ -56,7 +60,8 @@ const ChattingInput = (props) => {
 		(e) => {
 			if (e.key === 'Enter') {
 				e.preventDefault();
-				setText('');
+				onSend(text);
+				return setText('');
 			}
 		},
 		[ text ]
@@ -66,7 +71,8 @@ const ChattingInput = (props) => {
 			// 이거 무슨 설정일까?
 			e.preventDefault();
 			// 메세지 보내는 메소드 실행하는 부분
-			setText('');
+			onSend(text);
+			return setText('');
 		},
 		[ text ]
 	);
@@ -74,10 +80,14 @@ const ChattingInput = (props) => {
 		<Fragment>
 			<InputContainer>
 				<TextInput ref={inputRef} value={text} onChange={onChangeText} onKeyPress={onKeyPressText} />
-				<SendButton onClick={handleOnClick} send={text} />
+				{text && <SendButton onClick={handleOnClick} />}
 			</InputContainer>
 		</Fragment>
 	);
+};
+
+ChattingInput.default = {
+	onSend: () => {}
 };
 
 export default ChattingInput;

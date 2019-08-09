@@ -1,14 +1,16 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
 	width: 60%;
-	height: 2.3rem;
+	margin: 1rem;
 `;
 
 const Title = styled.div`
 	margin-bottom: 0;
 	font-size: 0.8rem;
+	color: #2d3646;
+	font-weight: 600;
 	@media (max-width: 500px) {
 		font-size: 0.8rem;
 	}
@@ -23,15 +25,36 @@ const Input = styled.input`
 	&:focus {
 		outline: none;
 	}
+	&::placeholder {
+		color: #2d3646;
+		opacity: 0.3;
+	}
 `;
 
 const SignInput = (props) => {
-	const { label, value, onChange } = props;
+	const { label, value, placeholder, onChange } = props;
+	const titleRef = useRef('');
+
+	const handleFocus = useCallback((e) => {
+		titleRef.current.style.color = '#FF7A9B';
+	}, []);
+
+	const handleBlur = useCallback((e) => {
+		titleRef.current.style.color = '#2d3646';
+	}, []);
+
 	return (
 		<Fragment>
 			<Container>
-				<Title>{label}</Title>
-				<Input value={value} onChange={onChange} {...props} />
+				<Title ref={titleRef}>{label}</Title>
+				<Input
+					value={value}
+					onFocus={handleFocus}
+					onBlur={handleBlur}
+					onChange={onChange}
+					{...props}
+					placeholder={placeholder}
+				/>
 			</Container>
 		</Fragment>
 	);
@@ -40,6 +63,7 @@ const SignInput = (props) => {
 SignInput.defaultProps = {
 	label: '라벨을 입력하세요',
 	value: null,
+	placeholder: 'placeholder',
 	onChange: () => {}
 };
 

@@ -1,8 +1,8 @@
-import React, {useRef} from 'react';
-import {useDrag, useDrop} from 'react-dnd';
+import React, { useRef, Fragment } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 import styled from 'styled-components';
 import ItemTypes from './ItemTypes';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MainProfile from '../../UI_Components/MainProfile';
 /*
     새삼 react-dnd를 이용하면서 코드의 재사용성이 힘들다는 것을 알았다. 완벽히 독립적으로 작용하는 컴포넌트를 구현하는 것은
@@ -20,68 +20,61 @@ import MainProfile from '../../UI_Components/MainProfile';
 */
 
 const Draggable = styled.div`
-  & + & {
-        border-top: 0.2px solid rgba(45,54,70, 0.5);
-    }
+	& + & {
+		border-top: 0.2px solid rgba(45, 54, 70, 0.5);
+	}
 `;
 
-const DraggableProfile = (props)=>{
-    const {moveRoom, index, id, link} =props;
-    const ref = useRef(null);
-    const [, drop] = useDrop({
-    accept: ItemTypes.ROOM,
-    hover(item, monitor) {
-      if (!ref.current) {
-        return
-      }
-      const dragIndex = item.index;
-      const hoverIndex = index;
-      if (dragIndex === hoverIndex) {
-        return
-      }
-      const hoverBoundingRect = ref.current.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return
-      }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
-      }
-      console.log(hoverIndex);
-      moveRoom(dragIndex, hoverIndex)
-      item.index = hoverIndex
-    },
-    });
-    const [{ isDragging }, drag] = useDrag({
-    item: { type: ItemTypes.ROOM, id, index},
-    collect: monitor => ({
-      isDragging: monitor.isDragging(),
-    }),
-    });
-    const opacity = isDragging ? 0 : 1 ;
-    drag(drop(ref));
-    /*
+const DraggableProfile = (props) => {
+	const { moveRoom, index, id, link } = props;
+	const ref = useRef(null);
+	const [ , drop ] = useDrop({
+		accept: ItemTypes.ROOM,
+		hover(item, monitor) {
+			if (!ref.current) {
+				return;
+			}
+			const dragIndex = item.index;
+			const hoverIndex = index;
+			if (dragIndex === hoverIndex) {
+				return;
+			}
+			const hoverBoundingRect = ref.current.getBoundingClientRect();
+			const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+			const clientOffset = monitor.getClientOffset();
+			const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+			if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+				return;
+			}
+			if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+				return;
+			}
+			console.log(hoverIndex);
+			moveRoom(dragIndex, hoverIndex);
+			item.index = hoverIndex;
+		}
+	});
+	const [ { isDragging }, drag ] = useDrag({
+		item: { type: ItemTypes.ROOM, id, index },
+		collect: (monitor) => ({
+			isDragging: monitor.isDragging()
+		})
+	});
+	const opacity = isDragging ? 0 : 1;
+	drag(drop(ref));
+	/*
     스스로 피드백을 고민해 본 결과 이 부분에 뷰만 구상을 하고 HOC를 통해서 드래그앤 드랍 기능을 추가할 수 있지 않았을까?
     이렇게 뷰랑 로직을 분리해야지 스토리북을 사용하는 효과가 있다.
     */
-    return(
-            <>
-              <Draggable ref ={ref} style ={{opacity}}>
-                <Link to = {link} style ={{textDecoration: "none", color: "black"}}>
-                    <MainProfile {...props}/>
-                </Link>
-              </Draggable>
-            </>
-    );
-};
-// Component Default Props
-MainProfile.defaultProps = {
-    title: "채팅방 이름입니다.",
-    src: false,
-    varibleNumber: 0,
-    master: "Stark"
+	return (
+		<Fragment>
+			<Draggable ref={ref} style={{ opacity }}>
+				<Link to={link} style={{ textDecoration: 'none', color: 'black' }}>
+					<MainProfile {...props} />
+				</Link>
+			</Draggable>
+		</Fragment>
+	);
 };
 
 export default DraggableProfile;

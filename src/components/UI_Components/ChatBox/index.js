@@ -37,6 +37,8 @@ const Description = styled.div`
 	border: 1px solid #2d3646;
 	border-radius: 0.3rem;
 	font-size: 0.8rem;
+	/*CSS 자체에서 줄 바꿈을 처리해주는 속성. word-berak를 기억해두자.*/
+	word-break: break-all;
 `;
 
 const Profile = styled.div`
@@ -74,7 +76,8 @@ const ChatBox = (props) => {
 };
 
 ChatBox.defaultProps = {
-	me: false
+	me: false,
+	name: 'Stark'
 };
 
 export default ChatBox;
