@@ -300,3 +300,14 @@ export default ChatBoxRender;
   이렇게 ChatBox의 내용이 변할 때만 렌더링을 다시한다는 조건으로 리스특의 값 업데이트 될 때마다 다시 렌더링 되는 것을 막아주어 렌더링 최적화를 할 수있다.
 
   다만, 리액트 훅을 자주 쓰는 나로써는 shouldComponentUpdate를 훅 문법으로 사용할 수 없을지 찾아보고 있다. 
+
+
+  ## 05. 그 외 에러
+
+  ### (01) git config --global user.email 
+
+   그 동안 git config --global user.email에 잘못된 이메일 주소를 넣어서 깃허브의 내 커밋이 기록되지 않았다. 깃허브가 나의 작업량을 통계해주는 포트폴리오가 될 수도 있기에 이부분을 신경 쓰는 것이 개발자로서 퍼스널 브랜딩을 만드는 데 중요하다. 깃 설정을 바꾸는 방법은 다음과 같다.
+
+   ```bash
+  $git config --global user.email "수정된 이메일"
+   ```
