@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import styled from 'styled-components';
 import Title from '../Title';
+import { withRouter } from 'react-router-dom';
 
 const BoxBorder = styled.div`
 	display: flex;
@@ -34,14 +35,35 @@ const ThirdContianer = styled.div`
 	width: 100%;
 	background: rgba(45, 54, 70, 1);
 `;
+const SendButton = styled.div`
+	position: absolute;
+	padding: 0.1rem;
+	width: 20px;
+	height: 20px;
+	background: url('/sendicon.svg');
+	background-size: contain;
+	border-radius: 100%;
+	transform: rotate(180deg);
+	right: 0;
+	background-color: white;
+	top: 0.5rem;
+	margin-right: 3%;
+	margin-left: 3%;
+	cursor: pointer;
+`;
 
 const LayOut = (props) => {
-	const { title, content, info } = props;
+	const { title, content, info, history, match } = props;
+	const isHome = match.path === '/';
+	const backActionClick = useCallback((e) => {
+		history.goBack();
+	}, []);
 	return (
 		<Fragment>
 			<BoxBorder>
 				<FirstContianer>
 					<Title>{title}</Title>
+					{!isHome && <SendButton onClick={backActionClick} />}
 				</FirstContianer>
 				<SecondContianer>{content}</SecondContianer>
 				<ThirdContianer>{info}</ThirdContianer>
@@ -50,4 +72,4 @@ const LayOut = (props) => {
 	);
 };
 
-export default LayOut;
+export default withRouter(LayOut);
