@@ -1,35 +1,35 @@
-import React, { Fragment, Component, createRef } from 'react';
-import ChatBoxRender from '../ChatBoxRender';
+import React, { Fragment, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
+import ChatBox from '../../UI_Components/ChatBox';
 
 const Container = styled.div`
 	height: 100%;
 	overflow: scroll;
 `;
-class RoomPage extends Component {
-	autoScroll = createRef();
-	shouldComponentUpdate(nextProps, nextState) {
-		return nextProps.chats !== this.props.chats;
-	}
-	// 자동으로 채팅시 아래로 스크롤 없애주는 코드 컨테이너 div에 ref를 설정한 후
-	// ref.current의 scrollHeight, clientHeight, scrollTop을 이용해서 구현한다.
-	componentDidUpdate() {
-		const { autoScroll } = this;
-		const { scrollHeight, clientHeight } = autoScroll.current;
-		if (clientHeight < scrollHeight) {
-			this.autoScroll.current.scrollTop = scrollHeight - clientHeight;
-		}
-	}
-	render() {
-		const { chats } = this.props;
-		const { autoScroll } = this;
-		const chatList = chats.map((chat, idx) => <ChatBoxRender key={idx} description={chat} />);
-		return (
-			<Fragment>
-				<Container ref={autoScroll}>{chats && chatList}</Container>
-			</Fragment>
-		);
-	}
-}
-
+// Hooks 문법을 사용하여 코드가 더 간결하게 되ㅗ었다.
+const RoomPage = (props) => {
+	const autoScroll = useRef(null);
+	const { chats } = props;
+	useEffect(
+		() => {
+			const { scrollHeight, clientHeight } = autoScroll.current;
+			if (clientHeight < scrollHeight) {
+				autoScroll.current.scrollTop = scrollHeight - clientHeight;
+			}
+		},
+		[ chats ]
+	);
+	const ChatBoxRender = React.memo((props) => <ChatBox {...props} />);
+	const chatList = useMemo(
+		() => {
+			return chats.map((chat, idx) => <ChatBoxRender key={idx} description={chat} />);
+		},
+		[ chats ]
+	);
+	return (
+		<Fragment>
+			<Container ref={autoScroll}>{chats && chatList}</Container>
+		</Fragment>
+	);
+};
 export default RoomPage;

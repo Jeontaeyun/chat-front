@@ -62,6 +62,7 @@ const Profile = styled.div`
 
 const ChatBox = (props) => {
 	const { name, description } = props;
+
 	return (
 		<Fragment>
 			<TotalContainer {...props}>

@@ -299,7 +299,45 @@ export default ChatBoxRender;
 
   이렇게 ChatBox의 내용이 변할 때만 렌더링을 다시한다는 조건으로 리스특의 값 업데이트 될 때마다 다시 렌더링 되는 것을 막아주어 렌더링 최적화를 할 수있다.
 
-  다만, 리액트 훅을 자주 쓰는 나로써는 shouldComponentUpdate를 훅 문법으로 사용할 수 없을지 찾아보고 있다. 
+  다만, 리액트 훅을 자주 쓰는 나로써는 shouldComponentUpdate를 훅 문법으로 사용할 수 없을지 찾아보고 있다. 이후 React.memo를 이용하여 함수형 훅을 사용할 때 렌더링 최적화를 진행할 수 있었다.
+
+  ```javascript
+
+const RoomPage = (props) => {
+	const autoScroll = useRef(null);
+	const { chats } = props;
+	useEffect(
+		() => {
+			const { scrollHeight, clientHeight } = autoScroll.current;
+			if (clientHeight < scrollHeight) {
+				autoScroll.current.scrollTop = scrollHeight - clientHeight;
+			}
+		},
+		[ chats ]
+	);
+	const ChatBoxRender = React.memo((props) => <ChatBox {...props} />);
+	const chatList = useMemo(
+		() => {
+			return chats.map((chat, idx) => <ChatBoxRender key={idx} description={chat} />);
+		},
+		[ chats ]
+	);
+	return (
+		<Fragment>
+			<Container ref={autoScroll}>{chats && chatList}</Container>
+		</Fragment>
+	);
+};
+export default RoomPage;
+
+  ```
+
+  Hooks를 쓰는 방법이 더 코드가 간결해서 이 방법을 채택했다.
+
+구분  | 설명 
+---- | -------------------------------
+React.memo | 기본적으로 HOC로 동일한 입력값이 발생할 때 재실행 되지 않게 해서 최적화를 도와준다. shallow(얇은) 비교를 통해서 props값에 변화가 있을 때만 리렌더링합니다. 첫 번째 인자에 컴포넌트를 지정하고, 두 번째 인자로 비교함수를 지정할 수 있습니다.
+
 
 
   ## 05. 그 외 에러
@@ -311,3 +349,4 @@ export default ChatBoxRender;
    ```bash
   $git config --global user.email "수정된 이메일"
    ```
+
