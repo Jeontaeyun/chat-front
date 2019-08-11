@@ -2,8 +2,8 @@ import React, { Fragment, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-	width: 60%;
-	margin: 1rem;
+	width: 80%;
+	margin: 1rem auto;
 `;
 
 const Title = styled.div`
@@ -19,7 +19,7 @@ const Title = styled.div`
 const Input = styled.input`
 	border: none;
 	border-bottom: 1px solid #2d3646;
-	width: 60%;
+	width: 100%;
 	font-size: 1rem;
 	height: 1.8rem;
 	&:focus {
@@ -32,7 +32,7 @@ const Input = styled.input`
 `;
 
 const SignInput = (props) => {
-	const { label, value, placeholder, onChange } = props;
+	const { label, value, placeholder, onChange, type } = props;
 	const titleRef = useRef('');
 
 	const handleFocus = useCallback((e) => {
@@ -52,8 +52,9 @@ const SignInput = (props) => {
 					onFocus={handleFocus}
 					onBlur={handleBlur}
 					onChange={onChange}
-					{...props}
 					placeholder={placeholder}
+					htmlType={type}
+					{...props}
 				/>
 			</Container>
 		</Fragment>
@@ -64,7 +65,8 @@ SignInput.defaultProps = {
 	label: '라벨을 입력하세요',
 	value: null,
 	placeholder: 'placeholder',
-	onChange: () => {}
+	onChange: () => {},
+	type: 'text'
 };
 
 export default SignInput;
