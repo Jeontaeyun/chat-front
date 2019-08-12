@@ -89,9 +89,9 @@ const ValueContainer = styled.div`
 `;
 
 const SignSelector = (props) => {
-	const { list, label } = props;
+	const { list, label, value } = props;
 	const [ selectValue, setSelectValue ] = useState('');
-	const [ onList, setOnList ] = useState(false);
+	const [ onList, setOnList ] = useState(value);
 	const onSelectValue = useCallback(
 		(item) => (e) => {
 			setOnList(false);

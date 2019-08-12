@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import LayOut from '../../components/UI_Components/LayOut';
 import LoginPage from '../../components/Page_Components/LoginPage';
+import RouterLayout from '../../components/Page_Components/RouterLayout';
 
 class Login extends Component {
 	render() {
 		return (
 			<Fragment>
-				<LayOut title={'로그인'} content={<LoginPage />} />
+				<RouterLayout title={'로그인'} content={<LoginPage />} />
 			</Fragment>
 		);
 	}

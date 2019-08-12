@@ -53,11 +53,7 @@ const SendButton = styled.div`
 `;
 
 const LayOut = (props) => {
-	const { title, content, info, history, match } = props;
-	const isHome = match.path === '/';
-	const backActionClick = useCallback((e) => {
-		history.goBack();
-	}, []);
+	const { title, content, info, isHome, backActionClick } = props;
 	return (
 		<Fragment>
 			<BoxBorder>
@@ -72,4 +68,9 @@ const LayOut = (props) => {
 	);
 };
 
-export default withRouter(LayOut);
+LayOut.defaultProps = {
+	match: null,
+	history: null
+};
+
+export default LayOut;
