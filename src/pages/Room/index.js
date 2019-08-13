@@ -4,25 +4,28 @@ import RoomPage from '../../components/Page_Components/RoomPage';
 import io from 'socket.io-client';
 import RouterLayout from '../../components/Page_Components/RouterLayout';
 
-const socket = io.connect('http://localhost:8000/chat', { path: '/socket.io' });
-
 class Room extends Component {
 	state = {
 		chats: []
 	};
-	handleSend = (text) => {
-		socket.emit('send', text);
-	};
+
 	shouldComponentUpdate(nextProps, nextState) {
 		return nextState !== this.state;
 	}
+	// 이렇게 구현을 해주어 해당 컴포넌트가 있을 때만 해당 소켓으로 통신할 수 있게 해준다.
 	componentDidMount() {
+		const socket = io.connect('http://localhost:8000/chat', { path: '/socket.io' });
 		socket.on('chat', (data) => {
 			this.setState({
 				chats: [ ...this.state.chats, data ]
 			});
 		});
 	}
+	handleSend = (text) => {
+		const socket = io.connect('http://localhost:8000/chat', { path: '/socket.io' });
+		socket.emit('send', text);
+	};
+
 	render() {
 		const { handleSend } = this;
 		const { chats } = this.state;
