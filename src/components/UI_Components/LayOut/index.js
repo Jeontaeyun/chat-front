@@ -1,7 +1,6 @@
-import React, { Fragment, useCallback } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import Title from '../Title';
-import { withRouter } from 'react-router-dom';
 
 const BoxBorder = styled.div`
 	display: flex;
@@ -37,7 +36,6 @@ const ThirdContianer = styled.div`
 `;
 const SendButton = styled.div`
 	position: absolute;
-	padding: 0.1rem;
 	width: 20px;
 	height: 20px;
 	background: url('/sendicon.svg');
@@ -46,7 +44,7 @@ const SendButton = styled.div`
 	transform: rotate(180deg);
 	right: 0;
 	background-color: white;
-	top: 0.5rem;
+	margin-top: 1.5%;
 	margin-right: 3%;
 	margin-left: 3%;
 	cursor: pointer;

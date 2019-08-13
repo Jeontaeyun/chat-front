@@ -22,7 +22,7 @@ const ListContainer = styled.ul`
 	/*ul 태그에는 패딩이 기본적으로 40px들어가 있어 이를 수정해주어야 한다.*/
 	padding-left: 0;
 	z-index: 100;
-	animation: ${boxFade} 2s 1s linear alternate;
+	animation: ${boxFade} 1s linear alternate;
 	box-shadow: 0.01rem 0.01rem 0.8rem 0.01rem #2d3646;
 `;
 const List = styled.li`
