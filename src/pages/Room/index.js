@@ -20,6 +20,7 @@ class Room extends Component {
 				chats: [ ...this.state.chats, data ]
 			});
 		});
+		// URL 형식을 바꾸는 방법은 어떤 것일 까?
 	}
 	handleSend = (text) => {
 		const socket = io.connect('http://localhost:8000/chat', { path: '/socket.io' });

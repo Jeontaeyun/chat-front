@@ -51,6 +51,15 @@ const Container = styled.div`
 	margin: 0 auto;
 `;
 
+const Error = styled.div`
+	margin-top: 0.3rem;
+	font-size: 0.8rem;
+	color: red;
+	font-weight: 800;
+	@media (max-width: 500px) {
+		font-size: 0.8rem;
+	}
+`;
 const Title = styled.div`
 	position: relative;
 	width: 100%;
@@ -78,9 +87,9 @@ const Label = styled.div`
 	display: block;
 	height: 1.4rem;
 	position: relative;
-	color: ${(props) => (props.selectValue || props.onList ? '#FF7A9B' : '#2d3646')};
+	color: ${(props) => (props.selectValue || props.isList ? '#FF7A9B' : '#2d3646')};
 	font-weight: ${(props) => (props.selectValue || props.onList ? '600' : null)};
-	${(props) => (props.selectValue || props.onList) && 'transition: font-size 0.2s ease-in ; font-size: 0.8rem'};
+	${(props) => (props.selectValue || props.isList) && 'transition: font-size 0.2s ease-in ; font-size: 0.8rem'};
 `;
 
 const ValueContainer = styled.div`
@@ -89,22 +98,26 @@ const ValueContainer = styled.div`
 `;
 
 const SignSelector = (props) => {
-	const { list, label, value } = props;
+	const { list, label, value, onChange, error, message } = props;
 	const [ selectValue, setSelectValue ] = useState('');
-	const [ onList, setOnList ] = useState(value);
+	const [ isList, setIsList ] = useState(false);
 	const onSelectValue = useCallback(
 		(item) => (e) => {
-			setOnList(false);
+			const event = {
+				...e,
+				target: {
+					value: item
+				}
+			};
+			setIsList(false);
 			setSelectValue(item);
+			onChange(event);
 		},
-		[ onList, setSelectValue ]
+		[ setSelectValue, onChange ]
 	);
-	const onClickList = useCallback(
-		(e) => {
-			setOnList(true);
-		},
-		[ onList ]
-	);
+	const onClickList = useCallback((e) => {
+		setIsList(true);
+	}, []);
 	const selectList = useMemo(
 		() =>
 			list.map((item, idx) => (
@@ -112,21 +125,21 @@ const SignSelector = (props) => {
 					{item}
 				</List>
 			)),
-		[ onList ]
+		[ onSelectValue, list ]
 	);
 	return (
 		<Fragment>
 			<Container>
 				<Title>
-					<Label selectValue={selectValue} onList={onList}>
+					<Label selectValue={selectValue} isList={isList}>
 						{label}
 					</Label>
-					{selectValue && <ValueContainer>{selectValue}</ValueContainer>}{' '}
-					<SelectButton onClick={onClickList} />
+					{selectValue && <ValueContainer>{value}</ValueContainer>} <SelectButton onClick={onClickList} />
 				</Title>
 				<input type="hidden" value={selectValue} />
 
-				{onList && <ListContainer active={onList}>{selectList}</ListContainer>}
+				{isList && <ListContainer active={isList}>{selectList}</ListContainer>}
+				{error && <Error>{message}</Error>}
 			</Container>
 		</Fragment>
 	);

@@ -16,6 +16,16 @@ const Title = styled.div`
 	}
 `;
 
+const Error = styled.div`
+	margin-top: 0.3rem;
+	font-size: 0.8rem;
+	color: red;
+	font-weight: 800;
+	@media (max-width: 500px) {
+		font-size: 0.8rem;
+	}
+`;
+
 const Input = styled.input`
 	border: none;
 	border-bottom: 1px solid #2d3646;
@@ -24,6 +34,8 @@ const Input = styled.input`
 	height: 1.8rem;
 	&:focus {
 		outline: none;
+		border-bottom: 1px solid #ff7a9b;
+		transition: border-bottom 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 	}
 	&::placeholder {
 		color: #2d3646;
@@ -32,7 +44,7 @@ const Input = styled.input`
 `;
 
 const SignInput = (props) => {
-	const { label, value, placeholder, onChange, type } = props;
+	const { label, value, placeholder, onChange, type, message, error } = props;
 	const titleRef = useRef('');
 
 	const handleFocus = useCallback((e) => {
@@ -56,6 +68,7 @@ const SignInput = (props) => {
 					htmlType={type}
 					{...props}
 				/>
+				{error && <Error>{message}</Error>}
 			</Container>
 		</Fragment>
 	);
@@ -66,7 +79,9 @@ SignInput.defaultProps = {
 	value: null,
 	placeholder: 'placeholder',
 	onChange: () => {},
-	type: 'text'
+	type: 'text',
+	error: false,
+	message: ''
 };
 
 export default SignInput;

@@ -50,12 +50,9 @@ const ChattingInput = (props) => {
 	useEffect(() => {
 		inputRef.current.focus();
 	}, []);
-	const onChangeText = useCallback(
-		(e) => {
-			setText(e.target.value);
-		},
-		[ text ]
-	);
+	const onChangeText = useCallback((e) => {
+		setText(e.target.value);
+	}, []);
 	const onKeyPressText = useCallback(
 		(e) => {
 			if (e.key === 'Enter') {
@@ -67,7 +64,7 @@ const ChattingInput = (props) => {
 				}
 			}
 		},
-		[ text ]
+		[ onSend, text ]
 	);
 	const handleOnClick = useCallback(
 		(e) => {
@@ -78,7 +75,7 @@ const ChattingInput = (props) => {
 				return setText('');
 			}
 		},
-		[ text ]
+		[ onSend, text ]
 	);
 	return (
 		<Fragment>

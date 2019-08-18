@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 /*
@@ -84,14 +84,25 @@ const Info = styled.div`
 
 const MainProfile = (props) => {
 	const { title, varibleNumber, master, max } = props;
+	const [ isMax, setIsMax ] = useState(false);
+	useEffect(
+		() => {
+			if (varibleNumber === max) {
+				setIsMax(true);
+			} else {
+				setIsMax(false);
+			}
+		},
+		[ varibleNumber, max ]
+	);
 	return (
 		<Fragment>
 			<Frame>
 				<Profile {...props} />
 				<RoomTitle>{title}</RoomTitle>
 				<InfoContiner>
-					<Info style={max && { color: '#FF7A9B', fontWeight: '900' }}>
-						{max ? 'Full' : `${varibleNumber}명`}
+					<Info style={isMax ? { color: '#FF7A9B', fontWeight: '900' } : null}>
+						{isMax ? 'Full' : `${varibleNumber}명`}
 					</Info>
 					<Info>{`${master}이 만든 방`}</Info>
 				</InfoContiner>
@@ -102,11 +113,11 @@ const MainProfile = (props) => {
 // Component Default Props
 MainProfile.defaultProps = {
 	title: '채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.',
-	src: false,
-	varibleNumber: 0,
+	src: '',
+	varibleNumber: 2,
 	master: 'Stark',
 	draggable: true,
-	max: true
+	max: 3
 };
 
 export default MainProfile;

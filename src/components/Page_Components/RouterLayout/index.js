@@ -7,9 +7,12 @@ const RouterLayout = (props) => {
 	const isHome = match.path === '/';
 	if (match.props) {
 	}
-	const backActionClick = useCallback((e) => {
-		history.goBack();
-	}, []);
+	const backActionClick = useCallback(
+		(e) => {
+			history.goBack();
+		},
+		[ history ]
+	);
 	return (
 		<Fragment>
 			<LayOut {...props} isHome={isHome} backActionClick={backActionClick} />

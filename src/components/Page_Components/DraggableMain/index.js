@@ -5,7 +5,11 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 
 const DraggableMain = (props) => {
-	const [ rooms, setRooms ] = useState([ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]);
+	const [ rooms, setRooms ] = useState([
+		{ _id: 1, title: '태윤이와 함께하는 카카오톡', owner: 'Stark', max: 7 },
+		{ _id: 2, title: '오랜만이야', owner: 'Jaina', max: 7 },
+		{ _id: 3, title: '함께 채팅해요', owner: 'Stark', max: 7 }
+	]);
 	const moveRoom = useCallback(
 		(dragIndex, hoverIndex) => {
 			const dragRoom = rooms[dragIndex];
@@ -24,15 +28,14 @@ const DraggableMain = (props) => {
 				{/*react-dnd 라이브러리를 이용할 때 반드시 map에 index를 넣어주어야 한다.*/}
 				{rooms.map((item, index) => (
 					<DraggbaleProfile
-						id={item}
-						title={item}
-						key={item}
-						index={index}
-						link={`/room/${item}`}
+						id={item._id}
+						title={item.title}
+						key={item._id}
+						index={index._id}
+						link={`/room/${item._id}`}
 						moveRoom={moveRoom}
 					/>
 				))}
-				<DraggbaleProfile />
 			</DndProvider>
 		</Fragment>
 	);

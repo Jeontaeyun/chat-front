@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
-import Title from '../Title';
 
 const BoxBorder = styled.div`
 	display: flex;
@@ -13,12 +12,19 @@ const BoxBorder = styled.div`
 	left: 50%;
 	transform: translate(-50%, -50%);
 `;
+const Title = styled.div`
+	flex: 0.95;
+	padding-left: 0.5rem;
+	color: white;
+`;
 const FirstContianer = styled.div`
 	flex: 0.05;
-	display: block;
-	position: relative;
-	background: #2d3646;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	color: white;
 	width: 100%;
+	background: #2d3646;
 `;
 const SecondContianer = styled.div`
 	flex: 0.9;
@@ -34,20 +40,24 @@ const ThirdContianer = styled.div`
 	width: 100%;
 	background: rgba(45, 54, 70, 1);
 `;
+const Flex = styled.div`
+	flex: 0.05;
+	margin-right: 0.5rem;
+`;
 const SendButton = styled.div`
-	position: absolute;
 	width: 20px;
 	height: 20px;
+	margin-right: 0;
 	background: url('/sendicon.svg');
 	background-size: contain;
 	border-radius: 100%;
 	transform: rotate(180deg);
-	right: 0;
 	background-color: white;
-	margin-top: 1.5%;
-	margin-right: 3%;
-	margin-left: 3%;
 	cursor: pointer;
+	@media (max-height: 700px) {
+		width: 15px;
+		height: 15px;
+	}
 `;
 
 const LayOut = (props) => {
@@ -57,7 +67,7 @@ const LayOut = (props) => {
 			<BoxBorder>
 				<FirstContianer>
 					<Title>{title}</Title>
-					{!isHome && <SendButton onClick={backActionClick} />}
+					<Flex>{!isHome && <SendButton onClick={backActionClick} />}</Flex>
 				</FirstContianer>
 				<SecondContianer>{content}</SecondContianer>
 				<ThirdContianer>{info}</ThirdContianer>
