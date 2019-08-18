@@ -1,15 +1,23 @@
-import React, { useCallback, useState, Fragment } from 'react';
+import React, { useCallback, useState, Fragment, useEffect } from 'react';
 import DraggbaleProfile from '../DraggableProfile';
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
+import axios from 'axios';
 
 const DraggableMain = (props) => {
-	const [ rooms, setRooms ] = useState([
-		{ _id: 1, title: '태윤이와 함께하는 카카오톡', owner: 'Stark', max: 7 },
-		{ _id: 2, title: '오랜만이야', owner: 'Jaina', max: 7 },
-		{ _id: 3, title: '함께 채팅해요', owner: 'Stark', max: 7 }
-	]);
+	const user = JSON.parse(window.sessionStorage.getItem('localUser'));
+	const isLogined = !!user;
+	const [ rooms, setRooms ] = useState([]);
+	useEffect(() => {
+		// useEffect안에서 데이터를 불러오고 싶다면 다음과 같이 하나의 함수로 만들어주고 호출해야한다.
+		const fetchData = async () => {
+			const result = await axios.get(`/api/room`);
+			setRooms(result.data);
+			console.log(result.data);
+		};
+		fetchData();
+	}, []);
 	const moveRoom = useCallback(
 		(dragIndex, hoverIndex) => {
 			const dragRoom = rooms[dragIndex];
@@ -32,7 +40,8 @@ const DraggableMain = (props) => {
 						title={item.title}
 						key={item._id}
 						index={index._id}
-						link={`/room/${item._id}`}
+						link={isLogined ? `/room/${item._id}` : '/'}
+						max={item.max}
 						moveRoom={moveRoom}
 					/>
 				))}

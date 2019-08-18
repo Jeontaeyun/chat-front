@@ -15,6 +15,9 @@ const Container = styled.div`
 
 // Hooks 문법을 사용하여 코드가 더 간결하게 되었다.
 const SignupPage = (props) => {
+	const user = JSON.parse(window.sessionStorage.getItem('localUser'));
+	const isLogined = !!user;
+	const { history } = props;
 	const [ userId, setUserId ] = useState('');
 	const [ userPassword, setUserPassword ] = useState('');
 	const [ userNickname, setUserNickname ] = useState('');
@@ -29,7 +32,7 @@ const SignupPage = (props) => {
 			if (userId === '') setIsIdError(true);
 			else setIsIdError(false);
 		},
-		[ userId, isIdError ]
+		[ userId ]
 	);
 	const onChangePassword = useCallback(
 		(e) => {
@@ -60,7 +63,7 @@ const SignupPage = (props) => {
 			if (userNickname === '') return setIsNicknameError(true);
 			if (userJob === '') return setIsJobError(true);
 			const result = await axios.post(
-				`http://localhost:8000/api/user`,
+				`/api/user`,
 				{ userId, userPassword, userNickname, userJob },
 				{ withCredentials: true }
 			);
@@ -78,11 +81,11 @@ const SignupPage = (props) => {
 					if (userNickname === '') return setIsNicknameError(true);
 					if (userJob === '') return setIsJobError(true);
 					const result = await axios.post(
-						`http://localhost:8000/api/user`,
+						`/api/user`,
 						{ userId, userPassword, userNickname, userJob },
 						{ withCredentials: true }
 					);
-					console.dir(result);
+					window.sessionStorage.setItem('awfweljk', result.data[0]);
 					return props.history.goBack();
 				}
 			} catch (e) {
@@ -91,7 +94,9 @@ const SignupPage = (props) => {
 		},
 		[ userId, userNickname, userPassword, userJob, props.history ]
 	);
-
+	if (isLogined) {
+		history.push('/');
+	}
 	return (
 		<Fragment>
 			<Container onKeyPress={handleKeyPress}>

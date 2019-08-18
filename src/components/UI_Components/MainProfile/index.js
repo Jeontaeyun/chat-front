@@ -83,17 +83,17 @@ const Info = styled.div`
 `;
 
 const MainProfile = (props) => {
-	const { title, varibleNumber, master, max } = props;
+	const { title, chattingUser, master, max } = props;
 	const [ isMax, setIsMax ] = useState(false);
 	useEffect(
 		() => {
-			if (varibleNumber === max) {
+			if (chattingUser === max) {
 				setIsMax(true);
 			} else {
 				setIsMax(false);
 			}
 		},
-		[ varibleNumber, max ]
+		[ chattingUser, max ]
 	);
 	return (
 		<Fragment>
@@ -102,7 +102,7 @@ const MainProfile = (props) => {
 				<RoomTitle>{title}</RoomTitle>
 				<InfoContiner>
 					<Info style={isMax ? { color: '#FF7A9B', fontWeight: '900' } : null}>
-						{isMax ? 'Full' : `${varibleNumber}명`}
+						{isMax ? 'Full' : `${chattingUser} / ${max}명`}
 					</Info>
 					<Info>{`${master}이 만든 방`}</Info>
 				</InfoContiner>
@@ -114,7 +114,7 @@ const MainProfile = (props) => {
 MainProfile.defaultProps = {
 	title: '채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.',
 	src: '',
-	varibleNumber: 2,
+	chattingUser: 2,
 	master: 'Stark',
 	draggable: true,
 	max: 3

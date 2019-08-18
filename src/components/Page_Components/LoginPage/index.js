@@ -11,31 +11,24 @@ const Container = styled.div`
 `;
 // Hooks 문법을 사용하여 코드가 더 간결하게 되ㅗ었다.
 const LoginPage = (props) => {
+	const user = JSON.parse(window.sessionStorage.getItem('localUser'));
+	const isLogined = !!user;
+	const { history } = props;
 	const [ userId, setUserId ] = useState('');
 	const [ userPassword, setUserPassword ] = useState('');
 	const [ isId, setIsId ] = useState(false);
 	const [ isPassword, setIsPassword ] = useState(false);
-	const handleChangeId = useCallback(
-		(e) => {
-			setUserId(e.target.value);
-		},
-		[ userId ]
-	);
-	const handleChangePassword = useCallback(
-		(e) => {
-			setUserPassword(e.target.value);
-		},
-		[ userPassword ]
-	);
+	const handleChangeId = useCallback((e) => {
+		setUserId(e.target.value);
+	}, []);
+	const handleChangePassword = useCallback((e) => {
+		setUserPassword(e.target.value);
+	}, []);
 	const handleSubmit = useCallback(
 		async (e) => {
 			if (userId === '') return setIsId(true);
 			if (userPassword === '') return setIsPassword(true);
-			const user = await axios.post(
-				`http://localhost:8000/api/login`,
-				{ userId, userPassword },
-				{ withCredentials: true }
-			);
+			const user = await axios.post(`/api/login`, { userId, userPassword }, { withCredentials: true });
 			console.log(user);
 			window.sessionStorage.setItem('localUser', user);
 			return props.history.goBack();
@@ -47,18 +40,17 @@ const LoginPage = (props) => {
 			if (e.key === 'Enter') {
 				if (userId === '') return setIsId(true);
 				if (userPassword === '') return setIsPassword(true);
-				const user = await axios.post(
-					`http://localhost:8000/api/login`,
-					{ userId, userPassword },
-					{ withCredentials: true }
-				);
-				window.sessionStorage.setItem('localUser', JSON.stringify(user));
+				const user = await axios.post(`/api/login`, { userId, userPassword }, { withCredentials: true });
+				window.sessionStorage.setItem('localUser', JSON.stringify(user.data));
 				console.log(user);
 				return props.history.goBack();
 			}
 		},
 		[ userId, userPassword, props.history ]
 	);
+	if (isLogined) {
+		history.push('/');
+	}
 	return (
 		<Fragment>
 			<Container onKeyPress={handleSubmitKey}>

@@ -20,26 +20,29 @@ const StyleLink = styled(Link)`
     }
     margin:auto 5%;
 `;
-
 const CreateInfo = (props) => {
 	const { firstLink, secondLink, thirdLink, isLogined, history } = props;
-	const handleLogout = useCallback(async (e) => {
-		try {
-			await axios.post('http://localhost:8000/api/logout', { withCredentials: true });
-			window.sessionStorage.removeItem('localUser');
-			history.goBack();
-		} catch (e) {
-			console.error(e);
-		}
-	}, []);
+	const handleLogout = useCallback(
+		async (e) => {
+			try {
+				await axios.post('http://localhost:8000/api/logout', { withCredentials: true });
+				window.sessionStorage.removeItem('localUser');
+				// component.forceUpdate()를 함수형에서 할 수 있는 방법은 없을까?
+				history.push('/');
+			} catch (e) {
+				console.error(e);
+			}
+		},
+		[ history ]
+	);
 	return (
 		<Fragment>
 			<CreateContainer>
-				<StyleLink to={firstLink}>
-					<Button>채팅방 만들기</Button>
-				</StyleLink>
 				{isLogined ? (
 					<Fragment>
+						<StyleLink to={firstLink}>
+							<Button>채팅방 만들기</Button>
+						</StyleLink>
 						<Button onClick={handleLogout}>로그아웃</Button>
 					</Fragment>
 				) : (

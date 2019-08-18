@@ -4,11 +4,12 @@ import DraggableMain from '../../components/Page_Components/DraggableMain';
 import RouterLayout from '../../components/Page_Components/RouterLayout';
 
 const Main = (props) => {
-	const isLogined = !!window.sessionStorage.getItem('localUser');
+	const user = JSON.parse(window.sessionStorage.getItem('localUser'));
+	const isLogined = !!user;
 	return (
 		<Fragment>
 			<RouterLayout
-				title={'00님 감사합니다.'}
+				title={user ? `${user.nickname}님 감사합니다.` : `Chatting with Everyone`}
 				content={<DraggableMain />}
 				info={<CreateInfo firstLink="/newRoom" secondLink="/signup" thirdLink="/login" isLogined={isLogined} />}
 			/>
