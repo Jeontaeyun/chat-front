@@ -22,19 +22,16 @@ const RoomPage = (props) => {
 		[ chats ]
 	);
 	const ChatBoxRender = React.memo((props) => <ChatBox {...props} />);
-	const chatList = useMemo(
-		() => {
-			return chats.map((chat, idx) => (
-				<ChatBoxRender
-					key={idx}
-					me={user._id === chat.user._id}
-					description={chat.chat}
-					name={chat.user.nickname}
-				/>
-			));
-		},
-		[ chats ]
-	);
+	const chatList = useMemo(() => {
+		return chats.map((chat, idx) => (
+			<ChatBoxRender
+				key={idx}
+				me={user._id === chat.user._id}
+				description={chat.chat}
+				name={chat.user.nickname}
+			/>
+		));
+	}, []);
 	return (
 		<Fragment>
 			<Container ref={autoScroll}>{chats && chatList}</Container>
