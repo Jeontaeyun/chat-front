@@ -13,7 +13,7 @@ const BoxBorder = styled.div`
 	transform: translate(-50%, -50%);
 `;
 const Title = styled.div`
-	flex: 0.95;
+	flex: 0.99;
 	padding-left: 0.5rem;
 	color: white;
 `;
@@ -41,7 +41,7 @@ const ThirdContianer = styled.div`
 	background: rgba(45, 54, 70, 1);
 `;
 const Flex = styled.div`
-	flex: 0.05;
+	flex: 0.01;
 	margin-right: 0.5rem;
 `;
 const SendButton = styled.div`
