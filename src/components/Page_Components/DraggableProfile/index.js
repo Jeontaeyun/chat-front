@@ -94,7 +94,8 @@ const DraggableProfile = (props) => {
 				<Link to={!password ? link : '/'} style={{ textDecoration: 'none', color: 'black' }}>
 					<MainProfile {...props} />
 				</Link>
-				{isLogined && (
+				{props.max > props.numberUser &&
+				isLogined && (
 					<Modal view={isModal} onCancle={handleModal} onAction={isAvailablePass}>
 						비밀번호를 입력해주세요
 						<SignInput

@@ -37,22 +37,23 @@ const CreateRoomPage = (props) => {
 				{ title: roomName, password: roomPassword, max: roomMax, owner: user._id },
 				{ withCredentials: true }
 			);
-			console.log(result);
+			props.history.push(`/room/${result.data}`);
 		},
-		[ roomName, roomPassword, roomMax, user ]
+		[ roomName, roomPassword, roomMax, user, props.history ]
 	);
 	const handleSubmitKey = useCallback(
 		async (e) => {
 			if (e.key === 'Enter') {
 				if (roomName === '') return setIsName(true);
-				axios.post(
+				const result = await axios.post(
 					`/api/room`,
 					{ title: roomName, password: roomPassword, max: roomMax, owner: user._id },
 					{ withCredentials: true }
 				);
+				props.history.push(`/room/${result.data}`);
 			}
 		},
-		[ roomName, roomMax, user, roomPassword ]
+		[ roomName, roomMax, user, roomPassword, props.history ]
 	);
 	if (!isLogined) {
 		history.push('/');

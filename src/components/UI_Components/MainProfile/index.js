@@ -86,7 +86,7 @@ const MainProfile = (props) => {
 	const [ isMax, setIsMax ] = useState(false);
 	useEffect(
 		() => {
-			if (numberUser === max) {
+			if (numberUser >= max) {
 				setIsMax(true);
 			} else {
 				setIsMax(false);
