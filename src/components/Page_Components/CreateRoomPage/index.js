@@ -52,7 +52,7 @@ const CreateRoomPage = (props) => {
 				);
 			}
 		},
-		[ roomName ]
+		[ roomName, roomMax, user, roomPassword ]
 	);
 	if (!isLogined) {
 		history.push('/');

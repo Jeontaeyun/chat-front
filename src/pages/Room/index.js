@@ -4,19 +4,33 @@ import RoomPage from '../../components/Page_Components/RoomPage';
 import io from 'socket.io-client';
 import RouterLayout from '../../components/Page_Components/RouterLayout';
 import axios from 'axios';
+import Modal from '../../components/UI_Components/Modal';
+import SignInput from '../../components/UI_Components/SignInput';
 
 class Room extends Component {
 	state = {
-		chats: []
+		chats: [],
+		room: {},
+		roomPassword: ''
 	};
 	componentWillMount() {
-		const { room_id } = this.props.match.params;
+		const { room_id, visible } = this.props.match.params;
+
 		// 소켓 통신 이저너에 먼저 데이터 베이스에 저장된 chats를 호출한다.
-		const fetchCaht = async () => {
+		const fetchRoom = async () => {
+			const { data } = await axios.get(`/api/room/${room_id}/`, { withCredentials: true });
+			const filteredData = Object.assign({}, { ...data });
+			if (visible === 'true') {
+				filteredData.password = '';
+			}
+			this.setState({ room: filteredData });
+		};
+		const fetchChat = async () => {
 			const { data } = await axios.get(`/api/room/${room_id}/chat`, { withCredentials: true });
 			this.setState({ chats: this.state.chats.concat(data) });
 		};
-		fetchCaht();
+		fetchRoom();
+		fetchChat();
 	}
 	shouldComponentUpdate(nextProps, nextState) {
 		return nextState !== this.state;
@@ -31,22 +45,47 @@ class Room extends Component {
 		});
 		// URL 형식을 바꾸는 방법은 어떤 것일 까?
 	}
+
 	handleSend = async (text) => {
+		// 비밀번호 걸려 있으면 아무 것도 못하게 하는 코드
+		if (this.state.room.password) return;
 		const { room_id } = this.props.match.params;
 		const user = JSON.parse(window.sessionStorage.getItem('localUser'));
 		await axios.post(`api/room/${room_id}/chat`, { user, chat: text }, { withCredentials: true });
 		const socket = io.connect('http://localhost:8000/chat', { path: '/socket.io' });
 		socket.emit('send', { chat: text, _id: user._id, nickname: user.nickname });
 	};
-
+	onAction() {
+		const isAvailablePass = this.state.roomPassword === this.state.room.password;
+		if (isAvailablePass) return this.setState({ room: { ...this.state.room, password: '' } });
+		else return;
+	}
 	render() {
 		const { handleSend } = this;
 		const { chats } = this.state;
 		return (
 			<Fragment>
 				<RouterLayout
-					title={'채팅방 이름'}
-					content={<RoomPage chats={chats} />}
+					title={this.state.room.title}
+					content={
+						<Fragment>
+							<RoomPage chats={chats} />{' '}
+							<Modal view={this.state.room.password} onAction={this.onAction.bind(this)}>
+								{/*클래스 컴포넌트에서 state를 바꾸고 싶은데 프롭스로 상속한다면 this를 바인딩 해주어야 한다. 서로의 this가 다르다.*/}
+								비밀번호를 입력해주세요
+								<SignInput
+									label=""
+									placeholder="Password"
+									type="password"
+									value={this.state.roomPassword}
+									onChange={(e) => {
+										this.setState({ roomPassword: e.target.value });
+									}}
+									autoComplate="on"
+								/>
+							</Modal>
+						</Fragment>
+					}
 					info={<ChattingInput onSend={handleSend} />}
 				/>
 			</Fragment>

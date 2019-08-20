@@ -20,6 +20,7 @@ const DraggableMain = (props) => {
 		const fetchData = async () => {
 			const result = await axios.get(`/api/room`);
 			setRooms(result.data);
+			console.log(result);
 		};
 		fetchData();
 	}, []);
@@ -46,10 +47,13 @@ const DraggableMain = (props) => {
 							title={item.title}
 							key={item._id}
 							index={index._id}
-							link={isLogined ? `/room/${item._id}` : '/'}
+							link={isLogined && `/room/${item._id}`}
 							max={item.max}
 							moveRoom={moveRoom}
-							master={item.owner.nickname}
+							info={`${item.owner.nickname}이 만든 방${item.password && '(비밀방)'}`}
+							password={item.password}
+							isLogined={isLogined}
+							numberUser={item.numberUser}
 						/>
 					))}
 				</DndProvider>

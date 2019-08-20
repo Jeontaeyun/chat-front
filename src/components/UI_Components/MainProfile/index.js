@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
-
 /*
     새삼 react-dnd를 이용하면서 코드의 재사용성이 힘들다는 것을 알았다. 완벽히 독립적으로 작용하는 컴포넌트를 구현하는 것은
     꽤 생각을 많이 요구하는 것 같다. 여기서도 벌써 props와 container가 필요하다.
@@ -83,17 +82,17 @@ const Info = styled.div`
 `;
 
 const MainProfile = (props) => {
-	const { title, chattingUser, master, max } = props;
+	const { title, numberUser, info, max } = props;
 	const [ isMax, setIsMax ] = useState(false);
 	useEffect(
 		() => {
-			if (chattingUser === max) {
+			if (numberUser === max) {
 				setIsMax(true);
 			} else {
 				setIsMax(false);
 			}
 		},
-		[ chattingUser, max ]
+		[ numberUser, max ]
 	);
 	return (
 		<Fragment>
@@ -102,9 +101,9 @@ const MainProfile = (props) => {
 				<RoomTitle>{title}</RoomTitle>
 				<InfoContiner>
 					<Info style={isMax ? { color: '#FF7A9B', fontWeight: '900' } : null}>
-						{isMax ? 'Full' : `${chattingUser} / ${max}명`}
+						{isMax ? 'Full' : `${numberUser} / ${max}명`}
 					</Info>
-					<Info>{`${master}이 만든 방`}</Info>
+					<Info>{info}</Info>
 				</InfoContiner>
 			</Frame>
 		</Fragment>
@@ -114,7 +113,7 @@ const MainProfile = (props) => {
 MainProfile.defaultProps = {
 	title: '채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.',
 	src: '',
-	chattingUser: 2,
+	numberUser: 2,
 	master: 'Stark',
 	draggable: true,
 	max: 3
