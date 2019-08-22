@@ -53,6 +53,7 @@ const DraggableMain = (props) => {
 							password={item.password}
 							isLogined={isLogined}
 							numberUser={item.numberUser}
+							profile={item.owner.profile}
 						/>
 					))}
 				</DndProvider>

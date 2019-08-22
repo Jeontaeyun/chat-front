@@ -25,7 +25,7 @@ const CreateInfo = (props) => {
 	const handleLogout = useCallback(
 		async (e) => {
 			try {
-				await axios.post('http://localhost:8000/api/logout', { withCredentials: true });
+				await axios.post('/api/logout', { withCredentials: true });
 				window.sessionStorage.removeItem('localUser');
 				// component.forceUpdate()를 함수형에서 할 수 있는 방법은 없을까?
 				history.push('/');

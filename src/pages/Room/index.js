@@ -44,15 +44,12 @@ class Room extends Component {
 		const fetchChat = async () => {
 			const { data } = await axios.get(`/api/room/${room_id}/chat`, { withCredentials: true });
 			this.setState({ chats: this.state.chats.concat(data) });
-			setTimeout(()=>{
-				this.setState({loading: false});
-			},1000);
+			setTimeout(() => {
+				this.setState({ loading: false });
+			}, 1000);
 		};
 		fetchRoom();
 		fetchChat();
-	}
-	shouldComponentUpdate(nextProps, nextState) {
-		return nextState !== this.state;
 	}
 	// 이렇게 구현을 해주어 해당 컴포넌트가 있을 때만 해당 소켓으로 통신할 수 있게 해준다.
 	componentDidMount() {
@@ -62,6 +59,9 @@ class Room extends Component {
 			});
 		});
 		// URL 형식을 바꾸는 방법은 어떤 것일 까?
+	}
+	componentDidUpdate(nextProps, nextState) {
+		return nextState.chats !== this.state.chats;
 	}
 
 	onAction() {
@@ -79,7 +79,19 @@ class Room extends Component {
 					title={this.state.room.title}
 					content={
 						<Fragment>
-							{this.state.loading && <div style ={{width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center"}}><RotateSpinner loading={this.state.loading} color="#ff7a9b" /></div>}
+							{this.state.loading && (
+								<div
+									style={{
+										width: '100%',
+										height: '100%',
+										display: 'flex',
+										alignItems: 'center',
+										justifyContent: 'center'
+									}}
+								>
+									<RotateSpinner loading={this.state.loading} color="#ff7a9b" />
+								</div>
+							)}
 							<RoomPage chats={chats} />
 							<Modal view={this.state.room.password} onAction={this.onAction.bind(this)}>
 								{/*클래스 컴포넌트에서 state를 바꾸고 싶은데 프롭스로 상속한다면 this를 바인딩 해주어야 한다. 서로의 this가 다르다.*/}

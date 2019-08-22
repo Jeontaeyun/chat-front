@@ -31,6 +31,7 @@ const RoomPage = (props) => {
 						me={user._id === chat.user._id}
 						description={chat.chat}
 						name={chat.user.nickname}
+						profile={chat.user.profile}
 					/>
 				));
 			}

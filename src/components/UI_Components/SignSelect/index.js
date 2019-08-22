@@ -12,11 +12,10 @@ const boxFade = keyframes`
 
 const ListContainer = styled.ul`
 	position: absolute;
-	top: -2.3rem;
+	top: -12rem;
 	width: 100%;
 	background: white;
 	padding: 2rem 0rem;
-
 	list-style-type: none;
 	border-radius: 0.4rem;
 	/*ul 태그에는 패딩이 기본적으로 40px들어가 있어 이를 수정해주어야 한다.*/
@@ -95,6 +94,7 @@ const Label = styled.div`
 const ValueContainer = styled.div`
 	font-weight: 400;
 	height: 1.4rem;
+	z-index: 100;
 `;
 
 const SignSelector = (props) => {
