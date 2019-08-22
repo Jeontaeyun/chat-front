@@ -3,19 +3,22 @@ import LayOut from '../../UI_Components/LayOut';
 import { withRouter } from 'react-router-dom';
 
 const RouterLayout = (props) => {
-	const { match, history } = props;
+	const { match, history, backActionClick } = props;
 	const isHome = match.path === '/';
-	if (match.props) {
-	}
-	const backActionClick = useCallback(
+
+	const defaultBackAction = useCallback(
 		(e) => {
-			history.goBack();
+			history.push('/');
 		},
 		[ history ]
 	);
 	return (
 		<Fragment>
-			<LayOut {...props} isHome={isHome} backActionClick={backActionClick} />
+			<LayOut
+				{...props}
+				isHome={isHome}
+				backActionClick={backActionClick ? backActionClick : defaultBackAction}
+			/>
 		</Fragment>
 	);
 };

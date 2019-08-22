@@ -4,6 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"@babel/core": "7.4.3",
+		"@emotion/core": "^10.0.16",
 		"@svgr/webpack": "4.1.0",
 		"@typescript-eslint/eslint-plugin": "1.6.0",
 		"@typescript-eslint/parser": "1.6.0",
@@ -52,6 +53,8 @@
 		"react-dnd-html5-backend": "^9.3.4",
 		"react-dom": "^16.8.6",
 		"react-router-dom": "^5.0.1",
+		"react-spinners": "^0.6.0",
+		"react-spinners-kit": "^1.9.0",
 		"resolve": "1.10.0",
 		"sass-loader": "^7.1.0",
 		"semver": "6.0.0",
@@ -83,25 +86,12 @@
 		"commitMessage": "01. 채팅앱 스토리 북 배포"
 	},
 	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
+		"production": [ ">0.2%", "not dead", "not op_mini all" ],
+		"development": [ "last 1 chrome version", "last 1 firefox version", "last 1 safari version" ]
 	},
 	"jest": {
-		"collectCoverageFrom": [
-			"src/**/*.{js,jsx,ts,tsx}",
-			"!src/**/*.d.ts"
-		],
-		"setupFiles": [
-			"react-app-polyfill/jsdom"
-		],
+		"collectCoverageFrom": [ "src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts" ],
+		"setupFiles": [ "react-app-polyfill/jsdom" ],
 		"setupFilesAfterEnv": [],
 		"testMatch": [
 			"<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
@@ -122,27 +112,12 @@
 			"^react-native$": "react-native-web",
 			"^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
 		},
-		"moduleFileExtensions": [
-			"web.js",
-			"js",
-			"web.ts",
-			"ts",
-			"web.tsx",
-			"tsx",
-			"json",
-			"web.jsx",
-			"jsx",
-			"node"
-		],
-		"watchPlugins": [
-			"jest-watch-typeahead/filename",
-			"jest-watch-typeahead/testname"
-		]
+		"moduleFileExtensions": [ "web.js", "js", "web.ts", "ts", "web.tsx", "tsx", "json", "web.jsx", "jsx", "node" ],
+		"watchPlugins": [ "jest-watch-typeahead/filename", "jest-watch-typeahead/testname" ]
 	},
 	"babel": {
-		"presets": [
-			"react-app"
-		]
+		"presets": [ "@babel/preset-react", "@babel/preset-env" ],
+		"plugins": [ "emotion" ]
 	},
 	"homepage": "https://jeontaeyun.github.io/chat-front/",
 	"devDependencies": {

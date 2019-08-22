@@ -9,7 +9,7 @@ const App = () => {
 	return (
 		<div>
 			<Route exact path="/" component={Main} />
-			<Route path="/room/:room_id" component={Room} />
+			<Route path="/room/:room_id/:visible?" component={Room} />
 			<Route path="/signup" component={Signup} />
 			<Route path="/login" component={Login} />
 			<Route path="/newRoom" component={CreateRoom} />

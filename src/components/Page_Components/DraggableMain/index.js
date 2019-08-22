@@ -4,6 +4,12 @@ import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import update from 'immutability-helper';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const Container = styled.div`
+	overflow-y: scroll;
+	height: 100%;
+`;
 
 const DraggableMain = (props) => {
 	const user = JSON.parse(window.sessionStorage.getItem('localUser'));
@@ -14,7 +20,6 @@ const DraggableMain = (props) => {
 		const fetchData = async () => {
 			const result = await axios.get(`/api/room`);
 			setRooms(result.data);
-			console.log(result.data);
 		};
 		fetchData();
 	}, []);
@@ -32,20 +37,27 @@ const DraggableMain = (props) => {
 
 	return (
 		<Fragment>
-			<DndProvider backend={HTML5Backend}>
-				{/*react-dnd 라이브러리를 이용할 때 반드시 map에 index를 넣어주어야 한다.*/}
-				{rooms.map((item, index) => (
-					<DraggbaleProfile
-						id={item._id}
-						title={item.title}
-						key={item._id}
-						index={index._id}
-						link={isLogined ? `/room/${item._id}` : '/'}
-						max={item.max}
-						moveRoom={moveRoom}
-					/>
-				))}
-			</DndProvider>
+			<Container>
+				<DndProvider backend={HTML5Backend}>
+					{/*react-dnd 라이브러리를 이용할 때 반드시 map에 index를 넣어주어야 한다.*/}
+					{rooms.map((item, index) => (
+						<DraggbaleProfile
+							id={item._id}
+							title={item.title}
+							key={item._id}
+							index={index._id}
+							link={isLogined && item.max > item.numberUser && `/room/${item._id}`}
+							max={item.max}
+							moveRoom={moveRoom}
+							info={`${item.owner.nickname}이 만든 방${item.password && '(비밀방)'}`}
+							password={item.password}
+							isLogined={isLogined}
+							numberUser={item.numberUser}
+							profile={item.owner.profile}
+						/>
+					))}
+				</DndProvider>
+			</Container>
 		</Fragment>
 	);
 };

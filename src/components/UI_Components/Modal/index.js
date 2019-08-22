@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 
@@ -55,29 +55,21 @@ const PositionButton = styled(Button)`
     `;
 
 const Modal = (props) => {
-	const { children, view, onAction, checkMessage } = props;
-	const [ stateview, setStateview ] = useState(view);
-	useEffect(
-		() => {
-			if (view) setStateview(true);
-			else setStateview(false);
-		},
-		[ view ]
-	);
-	const onHide = useCallback(
-		(e) => {
-			setStateview(false);
-		},
-		[ stateview ]
-	);
+	const { children, view, onAction, checkMessage, onCancle } = props;
+
 	return (
 		<Fragment>
-			{stateview && (
+			{view && (
 				<Fragment>
-					<Background onClick={onHide} />
-					<Container>
+					<Background onClick={onCancle} />
+					<Container
+						onClick={(e) => {
+							// 이벤트 버블링을 잡아줘야지 모달 호출 시에 제대로 동작한다.
+							e.stopPropagation();
+						}}
+					>
 						<ModalHead>
-							<Xbutton onClick={onHide}>X</Xbutton>
+							<Xbutton onClick={onCancle}>X</Xbutton>
 						</ModalHead>
 						<Content>{children}</Content>
 						<PositionButton onClick={onAction}>{checkMessage}</PositionButton>
@@ -89,9 +81,11 @@ const Modal = (props) => {
 };
 
 Modal.defaultProps = {
-	view: true,
+	view: false,
 	checkMessage: '확인',
-	children: '모달 내용'
+	children: '모달 내용',
+	onCancle: () => {},
+	onAction: () => {}
 };
 
 export default Modal;

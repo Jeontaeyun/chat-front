@@ -46,9 +46,14 @@ const Profile = styled.div`
 	width: 35px;
 	height: 35px;
 	${(props) =>
-		props.src
+		props.profile
 			? `
-    background: white;
+	background-image: url('http://localhost:9000${props.profile}');
+	 background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    bacground: white;
+    background-position-y: -4px;
     `
 			: `
     background-image: url('${basicProfile}');

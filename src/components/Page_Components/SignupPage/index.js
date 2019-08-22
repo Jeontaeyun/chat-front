@@ -5,6 +5,7 @@ import SignSelector from '../../UI_Components/SignSelect';
 import Button from '../../UI_Components/Button';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
+import ImageAdder from '../../UI_Components/ImageAdder';
 
 const Container = styled.div`
 	margin-top: 6em;
@@ -22,6 +23,7 @@ const SignupPage = (props) => {
 	const [ userPassword, setUserPassword ] = useState('');
 	const [ userNickname, setUserNickname ] = useState('');
 	const [ userJob, setUserJob ] = useState('');
+	const [ userProfile, setUserProfile ] = useState('');
 	const [ isIdError, setIsIdError ] = useState(false);
 	const [ isPasswordError, setIsPasswordError ] = useState(false);
 	const [ isNicknameError, setIsNicknameError ] = useState(false);
@@ -64,13 +66,13 @@ const SignupPage = (props) => {
 			if (userJob === '') return setIsJobError(true);
 			const result = await axios.post(
 				`/api/user`,
-				{ userId, userPassword, userNickname, userJob },
+				{ userId, userPassword, userNickname, userJob, userProfile },
 				{ withCredentials: true }
 			);
 			console.dir(result);
 			return props.history.goBack();
 		},
-		[ userId, userNickname, userPassword, userJob, props.history ]
+		[ userId, userNickname, userPassword, userJob, props.history, userProfile ]
 	);
 	const handleKeyPress = useCallback(
 		async (e) => {
@@ -82,7 +84,7 @@ const SignupPage = (props) => {
 					if (userJob === '') return setIsJobError(true);
 					const result = await axios.post(
 						`/api/user`,
-						{ userId, userPassword, userNickname, userJob },
+						{ userId, userPassword, userNickname, userJob, userProfile },
 						{ withCredentials: true }
 					);
 					window.sessionStorage.setItem('awfweljk', result.data[0]);
@@ -92,8 +94,11 @@ const SignupPage = (props) => {
 				console.dir(e);
 			}
 		},
-		[ userId, userNickname, userPassword, userJob, props.history ]
+		[ userId, userNickname, userPassword, userJob, props.history, userProfile ]
 	);
+	const handleProfile = useCallback((e) => {
+		setUserProfile(e);
+	}, []);
 	if (isLogined) {
 		history.push('/');
 	}
@@ -101,6 +106,7 @@ const SignupPage = (props) => {
 		<Fragment>
 			<Container onKeyPress={handleKeyPress}>
 				<form>
+					<ImageAdder onChange={handleProfile} />
 					<SignInput
 						label="아이디"
 						placeholder="ID"
@@ -135,7 +141,7 @@ const SignupPage = (props) => {
 						error={isJobError}
 						message="직업을 선택해주세요"
 					/>
-					<div style={{ marginTop: '6rem', textAlign: 'center' }}>
+					<div style={{ marginTop: '2rem', textAlign: 'center' }}>
 						<Button onClick={handleSubmit}>회원가입</Button>
 					</div>
 				</form>

@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useRef, useMemo } from 'react';
 import styled from 'styled-components';
 import ChatBox from '../../UI_Components/ChatBox';
+import { withRouter } from 'react-router-dom';
 
 const Container = styled.div`
 	height: 100%;
@@ -8,6 +9,7 @@ const Container = styled.div`
 `;
 // Hooks 문법을 사용하여 코드가 더 간결하게 되ㅗ었다.
 const RoomPage = (props) => {
+	const user = JSON.parse(window.sessionStorage.getItem('localUser'));
 	const autoScroll = useRef(null);
 	const { chats } = props;
 	useEffect(
@@ -22,9 +24,19 @@ const RoomPage = (props) => {
 	const ChatBoxRender = React.memo((props) => <ChatBox {...props} />);
 	const chatList = useMemo(
 		() => {
-			return chats.map((chat, idx) => <ChatBoxRender key={idx} description={chat} />);
+			if (user) {
+				return chats.map((chat, idx) => (
+					<ChatBoxRender
+						key={idx}
+						me={user._id === chat.user._id}
+						description={chat.chat}
+						name={chat.user.nickname}
+						profile={chat.user.profile}
+					/>
+				));
+			}
 		},
-		[ chats ]
+		[ user, chats ]
 	);
 	return (
 		<Fragment>
@@ -32,4 +44,4 @@ const RoomPage = (props) => {
 		</Fragment>
 	);
 };
-export default RoomPage;
+export default withRouter(RoomPage);
