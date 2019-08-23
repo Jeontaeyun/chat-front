@@ -15,12 +15,31 @@ class Room extends Component {
 		this.handleSend = async (text) => {
 			// 비밀번호 걸려 있으면 아무 것도 못하게 하는 코드
 			if (this.state.room.password) return;
+			// 큐 자료구조를 이용하여 같은 말을 3번 반복했을 때 20 초간 채팅 금지 구현
+			let isRepeat = this.state.checkArray[0] && this.state.checkArray[0] === this.state.checkArray[1] && this.state.checkArray[1] === this.state.checkArray[2];
+			if(isRepeat){
+				let timer = 20;
+				alert(`반복적으로 같은 메세지를 보낼 경우 채팅이 ${timer}초간 금지됩니다.`);
+				setTimeout(()=>{
+					timer= 20;
+					return this.state.checkArray = [];
+				},20000);
+				return;
+			}else{
+				this.state.checkArray.push(text);
+				if(this.state.checkArray.length>3){
+				this.state.checkArray.shift();
+				}
+			}
+			
+
 			const { room_id } = this.props.match.params;
 			const user = JSON.parse(window.sessionStorage.getItem('localUser'));
 			await axios.post(`api/room/${room_id}/chat`, { user, chat: text }, { withCredentials: true });
 			this.state.socket.emit('send', { chat: text, _id: user._id, nickname: user.nickname });
 		};
 		this.state = {
+			checkArray: [],
 			chats: [],
 			room: {},
 			roomPassword: '',
