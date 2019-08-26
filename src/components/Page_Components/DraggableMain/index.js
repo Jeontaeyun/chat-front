@@ -18,7 +18,8 @@ const DraggableMain = (props) => {
 	useEffect(() => {
 		// useEffect안에서 데이터를 불러오고 싶다면 다음과 같이 하나의 함수로 만들어주고 호출해야한다.
 		const fetchData = async () => {
-			const result = await axios.get(`/api/room`);
+			//withCredentials : true 설정을 해주어야 passport에서 매 요청마다 deserializeUser를 해준다.
+			const result = await axios.get(`/api/room`, {withCredentials: true});
 			setRooms(result.data);
 		};
 		fetchData();

@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
+
+const basicProfile = '/basicProfile.jpg';
 const BoxBorder = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -17,6 +19,30 @@ const Title = styled.div`
 	padding-left: 0.5rem;
 	color: white;
 `;
+const Profile = styled.div`
+	margin: 1%;
+	width: 35px;
+	height: 35px;
+	${(props) =>
+		props.profile
+			? `
+	background-image: url('http://localhost:9000${props.profile}');
+	 background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    bacground: white;
+    background-position-y: -4px;
+    `
+			: `
+    background-image: url('${basicProfile}');
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    bacground: white;
+    background-position-y: -4px;
+    `} border-radius: 100%;
+`;
+
 const FirstContianer = styled.div`
 	flex: 0.05;
 	display: flex;
@@ -66,6 +92,7 @@ const LayOut = (props) => {
 		<Fragment>
 			<BoxBorder>
 				<FirstContianer>
+					<Profile {...props}/>
 					<Title>{title}</Title>
 					<Flex>{!isHome && <SendButton onClick={backActionClick} />}</Flex>
 				</FirstContianer>

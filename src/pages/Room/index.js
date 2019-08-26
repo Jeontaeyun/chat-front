@@ -131,7 +131,9 @@ class Room extends Component {
 					info={<ChattingInput onSend={handleSend} />}
 					backActionClick={() => {
 						this.state.socket.disconnect();
-						this.props.history.push('/');
+						this.setState({loading: true});
+						setTimeout(()=> {this.props.history.push('/');this.setState({loading: false});}, 1000);
+						
 					}}
 				/>
 			</Fragment>
