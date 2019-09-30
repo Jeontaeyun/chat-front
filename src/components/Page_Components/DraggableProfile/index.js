@@ -7,26 +7,6 @@ import MainProfile from '../../UI_Components/MainProfile';
 import Modal from '../../UI_Components/Modal';
 import SignInput from '../../UI_Components/SignInput';
 import { withRouter } from 'react-router-dom';
-/*
-    새삼 react-dnd를 이용하면서 코드의 재사용성이 힘들다는 것을 알았다. 완벽히 독립적으로 작용하는 컴포넌트를 구현하는 것은
-    꽤 생각을 많이 요구하는 것 같다. 여기서도 벌써 props와 container가 필요하다.
-    또한, 리액트를 통한 state가 변해도 다시 리프레쉬를 하면 해당 데이터가 초기화 된다. 이를 저장하는 방법을 강구해야 한다.
-    01. 서버에 저장
-    02. 로컬 스토리지에 저장
-    03. ???
-
-    [내가 생각하는 로직]
-    01. 드래그 앤 드랍 이벤트에 드래그 한 데이터 추출
-    02. 드랍할 때 그 사이에 변하는 데이터의 순서 변경
-    03. 이 값을 드랍 시 dispatch하는 구현법
-
-*/
-
-const Draggable = styled.div`
-	& + & {
-		border-top: 0.2px solid rgba(45, 54, 70, 0.5);
-	}
-`;
 
 const DraggableProfile = (props) => {
 	const { moveRoom, index, id, link, password, isLogined } = props;
@@ -114,5 +94,11 @@ const DraggableProfile = (props) => {
 		</Fragment>
 	);
 };
+
+const Draggable = styled.div`
+	& + & {
+		border-top: 0.2px solid rgba(45, 54, 70, 0.5);
+	}
+`;
 
 export default withRouter(DraggableProfile);

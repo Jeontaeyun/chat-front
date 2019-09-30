@@ -1,6 +1,24 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
+const ChattingRoom = (props) => {
+	const { children, onClick } = props;
+	return (
+		<Fragment>
+			<BoxBorder {...props} onClick={onClick}>
+				<Contents>{children}</Contents>
+			</BoxBorder>
+		</Fragment>
+	);
+};
+// Component Default Props
+ChattingRoom.defaultProps = {
+	children: 'DEFAULT',
+	onClick: () => {},
+	disabled: false,
+	to: ''
+};
+
 const BoxBorder = styled.div`
 	transition: background 0.2s ease-in-out;
 	display: inline-flex;
@@ -33,23 +51,5 @@ const Contents = styled.div`
 		font-size: 0.03rem;
 	}
 `;
-
-const ChattingRoom = (props) => {
-	const { children, onClick } = props;
-	return (
-		<Fragment>
-			<BoxBorder {...props} onClick={onClick}>
-				<Contents>{children}</Contents>
-			</BoxBorder>
-		</Fragment>
-	);
-};
-// Component Default Props
-ChattingRoom.defaultProps = {
-	children: 'DEFAULT',
-	onClick: () => {},
-	disabled: false,
-	to: ''
-};
 
 export default ChattingRoom;

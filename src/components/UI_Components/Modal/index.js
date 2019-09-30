@@ -2,6 +2,40 @@ import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import Button from '../Button';
 
+const Modal = (props) => {
+	const { children, view, onAction, checkMessage, onCancle } = props;
+
+	return (
+		<Fragment>
+			{view && (
+				<Fragment>
+					<Background onClick={onCancle} />
+					<Container
+						onClick={(e) => {
+							// 이벤트 버블링을 잡아줘야지 모달 호출 시에 제대로 동작한다.
+							e.stopPropagation();
+						}}
+					>
+						<ModalHead>
+							<Xbutton onClick={onCancle}>X</Xbutton>
+						</ModalHead>
+						<Content>{children}</Content>
+						<PositionButton onClick={onAction}>{checkMessage}</PositionButton>
+					</Container>
+				</Fragment>
+			)}
+		</Fragment>
+	);
+};
+
+Modal.defaultProps = {
+	view: false,
+	checkMessage: '확인',
+	children: '모달 내용',
+	onCancle: () => {},
+	onAction: () => {}
+};
+
 const Background = styled.div`
 	background: rgba(45, 54, 70, 0.5);
 	opacity: 0.4;
@@ -53,39 +87,5 @@ const ModalHead = styled.div`
 const PositionButton = styled(Button)`
     margin-top: 2rem;
     `;
-
-const Modal = (props) => {
-	const { children, view, onAction, checkMessage, onCancle } = props;
-
-	return (
-		<Fragment>
-			{view && (
-				<Fragment>
-					<Background onClick={onCancle} />
-					<Container
-						onClick={(e) => {
-							// 이벤트 버블링을 잡아줘야지 모달 호출 시에 제대로 동작한다.
-							e.stopPropagation();
-						}}
-					>
-						<ModalHead>
-							<Xbutton onClick={onCancle}>X</Xbutton>
-						</ModalHead>
-						<Content>{children}</Content>
-						<PositionButton onClick={onAction}>{checkMessage}</PositionButton>
-					</Container>
-				</Fragment>
-			)}
-		</Fragment>
-	);
-};
-
-Modal.defaultProps = {
-	view: false,
-	checkMessage: '확인',
-	children: '모달 내용',
-	onCancle: () => {},
-	onAction: () => {}
-};
 
 export default Modal;

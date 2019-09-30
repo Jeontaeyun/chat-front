@@ -1,19 +1,44 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
-/*
-    새삼 react-dnd를 이용하면서 코드의 재사용성이 힘들다는 것을 알았다. 완벽히 독립적으로 작용하는 컴포넌트를 구현하는 것은
-    꽤 생각을 많이 요구하는 것 같다. 여기서도 벌써 props와 container가 필요하다.
-    또한, 리액트를 통한 state가 변해도 다시 리프레쉬를 하면 해당 데이터가 초기화 된다. 이를 저장하는 방법을 강구해야 한다.
-    01. 서버에 저장
-    02. 로컬 스토리지에 저장
-    03. ???
 
-    [내가 생각하는 로직]
-    01. 드래그 앤 드랍 이벤트에 드래그 한 데이터 추출
-    02. 드랍할 때 그 사이에 변하는 데이터의 순서 변경
-    03. 이 값을 드랍 시 dispatch하는 구현법
+const MainProfile = (props) => {
+	const { title, numberUser, info, max } = props;
+	const [ isMax, setIsMax ] = useState(false);
+	useEffect(
+		() => {
+			if (numberUser >= max) {
+				setIsMax(true);
+			} else {
+				setIsMax(false);
+			}
+		},
+		[ numberUser, max ]
+	);
+	return (
+		<Fragment>
+			<Frame>
+				<Profile {...props} />
+				<RoomTitle>{title}</RoomTitle>
+				<InfoContiner>
+					<Info style={isMax ? { color: '#FF7A9B', fontWeight: '900' } : null}>
+						{isMax ? 'Full' : `${numberUser} / ${max}명`}
+					</Info>
+					<Info>{info}</Info>
+				</InfoContiner>
+			</Frame>
+		</Fragment>
+	);
+};
+// Component Default Props
+MainProfile.defaultProps = {
+	title: '채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.',
+	src: '',
+	numberUser: 2,
+	master: 'Stark',
+	draggable: true,
+	max: 3
+};
 
-*/
 const basicProfile = '/basicProfile.jpg';
 
 const Frame = styled.div`
@@ -85,43 +110,5 @@ const Info = styled.div`
 	text-align: right;
 	flex: 0.5;
 `;
-
-const MainProfile = (props) => {
-	const { title, numberUser, info, max } = props;
-	const [ isMax, setIsMax ] = useState(false);
-	useEffect(
-		() => {
-			if (numberUser >= max) {
-				setIsMax(true);
-			} else {
-				setIsMax(false);
-			}
-		},
-		[ numberUser, max ]
-	);
-	return (
-		<Fragment>
-			<Frame>
-				<Profile {...props} />
-				<RoomTitle>{title}</RoomTitle>
-				<InfoContiner>
-					<Info style={isMax ? { color: '#FF7A9B', fontWeight: '900' } : null}>
-						{isMax ? 'Full' : `${numberUser} / ${max}명`}
-					</Info>
-					<Info>{info}</Info>
-				</InfoContiner>
-			</Frame>
-		</Fragment>
-	);
-};
-// Component Default Props
-MainProfile.defaultProps = {
-	title: '채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.채팅방 이름입니다.',
-	src: '',
-	numberUser: 2,
-	master: 'Stark',
-	draggable: true,
-	max: 3
-};
 
 export default MainProfile;

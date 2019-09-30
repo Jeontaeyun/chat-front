@@ -1,6 +1,59 @@
 import React, { Fragment, useState, useCallback, useMemo } from 'react';
 import styled, { keyframes } from 'styled-components';
 
+const SignSelector = (props) => {
+	const { list, label, value, onChange, error, message } = props;
+	const [ selectValue, setSelectValue ] = useState('');
+	const [ isList, setIsList ] = useState(false);
+	const onSelectValue = useCallback(
+		(item) => (e) => {
+			const event = {
+				...e,
+				target: {
+					value: item
+				}
+			};
+			setIsList(false);
+			setSelectValue(item);
+			onChange(event);
+		},
+		[ setSelectValue, onChange ]
+	);
+	const onClickList = useCallback((e) => {
+		setIsList(true);
+	}, []);
+	const selectList = useMemo(
+		() =>
+			list.map((item, idx) => (
+				<List key={idx} onClick={onSelectValue(item)}>
+					{item}
+				</List>
+			)),
+		[ onSelectValue, list ]
+	);
+	return (
+		<Fragment>
+			<Container>
+				<Title>
+					<Label selectValue={selectValue} isList={isList}>
+						{label}
+					</Label>
+					{selectValue && <ValueContainer>{value}</ValueContainer>} <SelectButton onClick={onClickList} />
+				</Title>
+				<input type="hidden" value={selectValue} />
+
+				{isList && <ListContainer active={isList}>{selectList}</ListContainer>}
+				{error && <Error>{message}</Error>}
+			</Container>
+		</Fragment>
+	);
+};
+
+SignSelector.defaultProps = {
+	list: [],
+	label: 'label'
+};
+
 const boxFade = keyframes`
   0% {
     opacity: 0;
@@ -96,58 +149,5 @@ const ValueContainer = styled.div`
 	height: 1.4rem;
 	z-index: 100;
 `;
-
-const SignSelector = (props) => {
-	const { list, label, value, onChange, error, message } = props;
-	const [ selectValue, setSelectValue ] = useState('');
-	const [ isList, setIsList ] = useState(false);
-	const onSelectValue = useCallback(
-		(item) => (e) => {
-			const event = {
-				...e,
-				target: {
-					value: item
-				}
-			};
-			setIsList(false);
-			setSelectValue(item);
-			onChange(event);
-		},
-		[ setSelectValue, onChange ]
-	);
-	const onClickList = useCallback((e) => {
-		setIsList(true);
-	}, []);
-	const selectList = useMemo(
-		() =>
-			list.map((item, idx) => (
-				<List key={idx} onClick={onSelectValue(item)}>
-					{item}
-				</List>
-			)),
-		[ onSelectValue, list ]
-	);
-	return (
-		<Fragment>
-			<Container>
-				<Title>
-					<Label selectValue={selectValue} isList={isList}>
-						{label}
-					</Label>
-					{selectValue && <ValueContainer>{value}</ValueContainer>} <SelectButton onClick={onClickList} />
-				</Title>
-				<input type="hidden" value={selectValue} />
-
-				{isList && <ListContainer active={isList}>{selectList}</ListContainer>}
-				{error && <Error>{message}</Error>}
-			</Container>
-		</Fragment>
-	);
-};
-
-SignSelector.defaultProps = {
-	list: [],
-	label: 'label'
-};
 
 export default SignSelector;

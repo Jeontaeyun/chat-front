@@ -4,22 +4,6 @@ import Button from '../../UI_Components/Button';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
-const CreateContainer = styled.div`
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-`;
-
-const StyleLink = styled(Link)`
-    text-decoration: none;
-    color: #2D3646;
-    &:hover {
-        color: white;
-    }
-    margin:auto 5%;
-`;
 const CreateInfo = (props) => {
 	const { firstLink, secondLink, thirdLink, isLogined, history } = props;
 	const handleLogout = useCallback(
@@ -64,4 +48,20 @@ CreateInfo.defaultProps = {
 	isLogined: false
 };
 
+const CreateContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+`;
+
+const StyleLink = styled(Link)`
+    text-decoration: none;
+    color: #2D3646;
+    &:hover {
+        color: white;
+    }
+    margin:auto 5%;
+`;
 export default withRouter(CreateInfo);

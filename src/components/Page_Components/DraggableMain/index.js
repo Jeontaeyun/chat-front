@@ -6,11 +6,6 @@ import update from 'immutability-helper';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const Container = styled.div`
-	overflow-y: scroll;
-	height: 100%;
-`;
-
 const DraggableMain = (props) => {
 	const user = JSON.parse(window.sessionStorage.getItem('localUser'));
 	const isLogined = !!user;
@@ -19,7 +14,7 @@ const DraggableMain = (props) => {
 		// useEffect안에서 데이터를 불러오고 싶다면 다음과 같이 하나의 함수로 만들어주고 호출해야한다.
 		const fetchData = async () => {
 			//withCredentials : true 설정을 해주어야 passport에서 매 요청마다 deserializeUser를 해준다.
-			const result = await axios.get(`/api/room`, {withCredentials: true});
+			const result = await axios.get(`/api/room`, { withCredentials: true });
 			setRooms(result.data);
 		};
 		fetchData();
@@ -62,5 +57,10 @@ const DraggableMain = (props) => {
 		</Fragment>
 	);
 };
+
+const Container = styled.div`
+	overflow-y: scroll;
+	height: 100%;
+`;
 
 export default DraggableMain;

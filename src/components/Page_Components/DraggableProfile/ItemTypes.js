@@ -1,3 +1,3 @@
 export default {
-    ROOM: 'room',
-  }
+	ROOM: 'room'
+};

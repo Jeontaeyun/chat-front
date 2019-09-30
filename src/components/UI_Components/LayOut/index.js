@@ -1,6 +1,27 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
+const LayOut = (props) => {
+	const { title, content, info, isHome, backActionClick } = props;
+	return (
+		<Fragment>
+			<BoxBorder>
+				<FirstContianer>
+					<Profile {...props} />
+					<Title>{title}</Title>
+					<Flex>{!isHome && <SendButton onClick={backActionClick} />}</Flex>
+				</FirstContianer>
+				<SecondContianer>{content}</SecondContianer>
+				<ThirdContianer>{info}</ThirdContianer>
+			</BoxBorder>
+		</Fragment>
+	);
+};
+
+LayOut.defaultProps = {
+	match: null,
+	history: null
+};
 
 const basicProfile = '/basicProfile.jpg';
 const BoxBorder = styled.div`
@@ -85,27 +106,5 @@ const SendButton = styled.div`
 		height: 15px;
 	}
 `;
-
-const LayOut = (props) => {
-	const { title, content, info, isHome, backActionClick } = props;
-	return (
-		<Fragment>
-			<BoxBorder>
-				<FirstContianer>
-					<Profile {...props}/>
-					<Title>{title}</Title>
-					<Flex>{!isHome && <SendButton onClick={backActionClick} />}</Flex>
-				</FirstContianer>
-				<SecondContianer>{content}</SecondContianer>
-				<ThirdContianer>{info}</ThirdContianer>
-			</BoxBorder>
-		</Fragment>
-	);
-};
-
-LayOut.defaultProps = {
-	match: null,
-	history: null
-};
 
 export default LayOut;

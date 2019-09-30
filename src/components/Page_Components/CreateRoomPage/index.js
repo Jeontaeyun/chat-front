@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useCallback } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import SignInput from '../../UI_Components/SignInput';
 import Button from '../../UI_Components/Button';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios';
 import SignSelector from '../../UI_Components/SignSelect';
 
 const Container = styled.div`
@@ -31,17 +31,17 @@ const CreateRoomPage = (props) => {
 	}, []);
 	const handleSubmit = useCallback(
 		async (e) => {
-			try{
-			if (roomName === '') return setIsName(true);
-			const result = await axios.post(
-				`/api/room`,
-				{ title: roomName, password: roomPassword, max: roomMax, owner: user._id },
-				{ withCredentials: true }
-			);
-			history.push(`/room/${result.data}`);
-		}catch(e){
-			console.error(e);
-		}
+			try {
+				if (roomName === '') return setIsName(true);
+				const result = await axios.post(
+					`/api/room`,
+					{ title: roomName, password: roomPassword, max: roomMax, owner: user._id },
+					{ withCredentials: true }
+				);
+				history.push(`/room/${result.data}`);
+			} catch (e) {
+				console.error(e);
+			}
 		},
 		[ roomName, roomPassword, roomMax, user, history ]
 	);

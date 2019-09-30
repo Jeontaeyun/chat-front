@@ -77,21 +77,31 @@
 		"deploy-storybook": "storybook-to-ghpages",
 		"build-storybook": "build-storybook -c .storybook -s public"
 	},
-	"eslintConfig": {
-		"extends": "react-app"
-	},
 	"storybook-deployer": {
 		"gitUsername": "Jeontaeyun",
 		"gitEmail": "jow1813@naver.com",
 		"commitMessage": "01. 채팅앱 스토리 북 배포"
 	},
 	"browserslist": {
-		"production": [ ">0.2%", "not dead", "not op_mini all" ],
-		"development": [ "last 1 chrome version", "last 1 firefox version", "last 1 safari version" ]
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
 	},
 	"jest": {
-		"collectCoverageFrom": [ "src/**/*.{js,jsx,ts,tsx}", "!src/**/*.d.ts" ],
-		"setupFiles": [ "react-app-polyfill/jsdom" ],
+		"collectCoverageFrom": [
+			"src/**/*.{js,jsx,ts,tsx}",
+			"!src/**/*.d.ts"
+		],
+		"setupFiles": [
+			"react-app-polyfill/jsdom"
+		],
 		"setupFilesAfterEnv": [],
 		"testMatch": [
 			"<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
@@ -112,12 +122,31 @@
 			"^react-native$": "react-native-web",
 			"^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
 		},
-		"moduleFileExtensions": [ "web.js", "js", "web.ts", "ts", "web.tsx", "tsx", "json", "web.jsx", "jsx", "node" ],
-		"watchPlugins": [ "jest-watch-typeahead/filename", "jest-watch-typeahead/testname" ]
+		"moduleFileExtensions": [
+			"web.js",
+			"js",
+			"web.ts",
+			"ts",
+			"web.tsx",
+			"tsx",
+			"json",
+			"web.jsx",
+			"jsx",
+			"node"
+		],
+		"watchPlugins": [
+			"jest-watch-typeahead/filename",
+			"jest-watch-typeahead/testname"
+		]
 	},
 	"babel": {
-		"presets": [ "@babel/preset-react", "@babel/preset-env" ],
-		"plugins": [ "emotion" ]
+		"presets": [
+			"@babel/preset-react",
+			"@babel/preset-env"
+		],
+		"plugins": [
+			"emotion"
+		]
 	},
 	"homepage": "https://jeontaeyun.github.io/chat-front/",
 	"devDependencies": {

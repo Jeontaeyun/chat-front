@@ -1,6 +1,27 @@
 import React, { Fragment } from 'react';
 import styled from 'styled-components';
 
+const ChatBox = (props) => {
+	const { name, description } = props;
+
+	return (
+		<Fragment>
+			<TotalContainer {...props}>
+				<Profile {...props} />
+				<ChatContainer {...props}>
+					<Title {...props}>{name}</Title>
+					<Description {...props}>{description}</Description>
+				</ChatContainer>
+			</TotalContainer>
+		</Fragment>
+	);
+};
+
+ChatBox.defaultProps = {
+	me: false,
+	name: 'Stark'
+};
+
 const basicProfile = '/basicProfile.jpg';
 
 const TotalContainer = styled.div`
@@ -64,26 +85,5 @@ const Profile = styled.div`
     background-position-y: -4px;
     `} border-radius: 100%;
 `;
-
-const ChatBox = (props) => {
-	const { name, description } = props;
-
-	return (
-		<Fragment>
-			<TotalContainer {...props}>
-				<Profile {...props} />
-				<ChatContainer {...props}>
-					<Title {...props}>{name}</Title>
-					<Description {...props}>{description}</Description>
-				</ChatContainer>
-			</TotalContainer>
-		</Fragment>
-	);
-};
-
-ChatBox.defaultProps = {
-	me: false,
-	name: 'Stark'
-};
 
 export default ChatBox;

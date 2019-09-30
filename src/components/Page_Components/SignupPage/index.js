@@ -7,14 +7,6 @@ import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import ImageAdder from '../../UI_Components/ImageAdder';
 
-const Container = styled.div`
-	margin-top: 6em;
-	& > div {
-		margin-top: 2rem;
-	}
-`;
-
-// Hooks 문법을 사용하여 코드가 더 간결하게 되었다.
 const SignupPage = (props) => {
 	const user = JSON.parse(window.sessionStorage.getItem('localUser'));
 	const isLogined = !!user;
@@ -149,4 +141,12 @@ const SignupPage = (props) => {
 		</Fragment>
 	);
 };
+
+const Container = styled.div`
+	margin-top: 6em;
+	& > div {
+		margin-top: 2rem;
+	}
+`;
+
 export default withRouter(SignupPage);

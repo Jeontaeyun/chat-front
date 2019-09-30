@@ -1,6 +1,47 @@
 import React, { Fragment, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
+const SignInput = (props) => {
+	const { label, value, placeholder, onChange, type, message, error } = props;
+	const titleRef = useRef('');
+
+	const handleFocus = useCallback((e) => {
+		titleRef.current.style.color = '#FF7A9B';
+	}, []);
+
+	const handleBlur = useCallback((e) => {
+		titleRef.current.style.color = '#2d3646';
+	}, []);
+
+	return (
+		<Fragment>
+			<Container>
+				<Title ref={titleRef}>{label}</Title>
+				<Input
+					value={value}
+					onFocus={handleFocus}
+					onBlur={handleBlur}
+					onChange={onChange}
+					placeholder={placeholder}
+					htmlType={type}
+					{...props}
+				/>
+				{error && <Error>{message}</Error>}
+			</Container>
+		</Fragment>
+	);
+};
+
+SignInput.defaultProps = {
+	label: '라벨을 입력하세요',
+	value: null,
+	placeholder: 'placeholder',
+	onChange: () => {},
+	type: 'text',
+	error: false,
+	message: ''
+};
+
 const Container = styled.div`
 	width: 80%;
 	margin: 1rem auto;
@@ -42,46 +83,5 @@ const Input = styled.input`
 		opacity: 0.3;
 	}
 `;
-
-const SignInput = (props) => {
-	const { label, value, placeholder, onChange, type, message, error } = props;
-	const titleRef = useRef('');
-
-	const handleFocus = useCallback((e) => {
-		titleRef.current.style.color = '#FF7A9B';
-	}, []);
-
-	const handleBlur = useCallback((e) => {
-		titleRef.current.style.color = '#2d3646';
-	}, []);
-
-	return (
-		<Fragment>
-			<Container>
-				<Title ref={titleRef}>{label}</Title>
-				<Input
-					value={value}
-					onFocus={handleFocus}
-					onBlur={handleBlur}
-					onChange={onChange}
-					placeholder={placeholder}
-					htmlType={type}
-					{...props}
-				/>
-				{error && <Error>{message}</Error>}
-			</Container>
-		</Fragment>
-	);
-};
-
-SignInput.defaultProps = {
-	label: '라벨을 입력하세요',
-	value: null,
-	placeholder: 'placeholder',
-	onChange: () => {},
-	type: 'text',
-	error: false,
-	message: ''
-};
 
 export default SignInput;
